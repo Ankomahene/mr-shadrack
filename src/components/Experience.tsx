@@ -1,9 +1,9 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-import { FaCode } from 'react-icons/fa';
+import { FaLaptopCode, FaPenNib } from 'react-icons/fa';
 
 export const Experience = () => {
   return (
-    <Flex flexDir={{ base: 'column', lg: 'row' }} bgColor="gray.200" my="6rem">
+    <Flex flexDir={{ base: 'column', lg: 'row' }} bgColor="gray.100" my="6rem">
       <Flex
         flexDir="column"
         justify="center"
@@ -24,7 +24,7 @@ export const Experience = () => {
       <Flex p="2rem" gap="6" flexDir={{ base: 'column', lg: 'row' }}>
         <Box w={{ base: '100%', lg: '50%' }}>
           <Box px="1rem">
-            <FaCode size="3rem" color="#2563eb" />
+            <FaLaptopCode size="2.5rem" color="#10a566" />
           </Box>
           <Heading my="0.5rem" size={{ base: 'md', lg: 'lg' }}>
             Frontend Developer
@@ -37,7 +37,7 @@ export const Experience = () => {
 
         <Box w={{ base: '100%', lg: '50%' }}>
           <Box px="1rem">
-            <FaCode size="3rem" color="#2563eb" />
+            <FaPenNib size="2.5rem" color="#2563eb" />
           </Box>
           <Heading my="0.5rem" size={{ base: 'md', lg: 'lg' }}>
             Graphic Design

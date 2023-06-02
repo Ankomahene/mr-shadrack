@@ -1,7 +1,16 @@
-import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
 import { Frame } from './Frame';
 import { BsDownload } from 'react-icons/bs';
 import { Stacks } from './Stacks';
+import { Link } from 'react-scroll';
 
 export const Hero = () => {
   return (
@@ -17,30 +26,34 @@ export const Hero = () => {
           excellent user experiences.
         </Text>
         <Flex gap={4} flexDir={{ base: 'column', lg: 'row' }}>
-          <Button
-            bgColor="brand.500"
-            color="white"
-            rounded="sm"
-            minW="200px"
-            h="50px"
-            _hover={{ bgColor: 'brand.600' }}
-          >
-            <Text as="span" mx="2">
-              Resume
-            </Text>{' '}
-            <BsDownload />
-          </Button>
-          <Button
-            color="brand.500"
-            bgColor="white"
-            variant="outline"
-            borderColor="brand.blue"
-            rounded="sm"
-            minW="200px"
-            h="50px"
-          >
-            More About me
-          </Button>
+          <ChakraLink href="resume.pdf" download="shadrack-resume.pdf">
+            <Button
+              bgColor="brand.500"
+              color="white"
+              rounded="sm"
+              minW="200px"
+              h="50px"
+              _hover={{ bgColor: 'brand.600' }}
+            >
+              <Text as="span" mx="2">
+                Resume
+              </Text>{' '}
+              <BsDownload />
+            </Button>
+          </ChakraLink>
+          <Link to="moreAboutMe" smooth={true} duration={1000}>
+            <Button
+              color="brand.500"
+              bgColor="white"
+              variant="outline"
+              borderColor="brand.blue"
+              rounded="sm"
+              minW="200px"
+              h="50px"
+            >
+              More About me
+            </Button>
+          </Link>
         </Flex>
       </Box>
       <Flex
