@@ -5,16 +5,15 @@ import {
   Flex,
   ListItem,
   ListItemProps,
-  Text,
   UnorderedList,
 } from '@chakra-ui/react';
+import { useState } from 'react';
+import { BiCollapseHorizontal, BiExpandHorizontal } from 'react-icons/bi';
 import { FaProjectDiagram, FaUser } from 'react-icons/fa';
-import { TbStarsFilled } from 'react-icons/tb';
-import { Link } from 'react-scroll';
 import { GiNotebook, GiSkills } from 'react-icons/gi';
 import { IoIosPaper } from 'react-icons/io';
-import { BiCollapseHorizontal, BiExpandHorizontal } from 'react-icons/bi';
-import { useState } from 'react';
+import { TbStarsFilled } from 'react-icons/tb';
+import { Link } from 'react-scroll';
 
 const listItemStyle: ListItemProps = {
   my: '1rem',
