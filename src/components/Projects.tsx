@@ -11,6 +11,7 @@ export const Projects = () => {
         color="white"
         textAlign="center"
         h="250px"
+        id="projects"
       >
         <Heading>My Projects</Heading>
         <Text py="1rem">

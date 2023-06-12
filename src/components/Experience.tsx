@@ -3,7 +3,12 @@ import { FaLaptopCode, FaPenNib } from 'react-icons/fa';
 
 export const Experience = () => {
   return (
-    <Flex flexDir={{ base: 'column', lg: 'row' }} bgColor="gray.100" my="6rem">
+    <Flex
+      flexDir={{ base: 'column', lg: 'row' }}
+      bgColor="gray.100"
+      my="6rem"
+      id="experience"
+    >
       <Flex
         flexDir="column"
         justify="center"

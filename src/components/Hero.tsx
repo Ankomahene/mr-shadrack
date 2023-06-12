@@ -1,20 +1,12 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Text,
-  Link as ChakraLink,
-} from '@chakra-ui/react';
-import { Frame } from './Frame';
-import { BsDownload } from 'react-icons/bs';
-import { Stacks } from './Stacks';
+import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { TbArrowBigDownLineFilled } from 'react-icons/tb';
 import { Link } from 'react-scroll';
+import { Frame } from './Frame';
+import { Stacks } from './Stacks';
 
 export const Hero = () => {
   return (
-    <Flex flexDir={{ base: 'column', lg: 'row' }} my="2rem">
+    <Flex flexDir={{ base: 'column', lg: 'row' }} my="2rem" id="hero">
       <Box w={{ base: '100%', lg: '50%' }}>
         <Frame />
         <Heading size={{ base: '2xl', md: '3xl', xl: '4xl' }} lineHeight="6rem">
@@ -26,7 +18,7 @@ export const Hero = () => {
           excellent user experiences.
         </Text>
         <Flex gap={4} flexDir={{ base: 'column', lg: 'row' }}>
-          <ChakraLink href="resume.pdf" download="shadrack-resume.pdf">
+          <Link to="resume" smooth={true} duration={1000}>
             <Button
               bgColor="brand.500"
               color="white"
@@ -38,10 +30,11 @@ export const Hero = () => {
               <Text as="span" mx="2">
                 Resume
               </Text>{' '}
-              <BsDownload />
+              <TbArrowBigDownLineFilled />
             </Button>
-          </ChakraLink>
-          <Link to="moreAboutMe" smooth={true} duration={1000}>
+          </Link>
+
+          <Link to="about" smooth={true} duration={1000}>
             <Button
               color="brand.500"
               bgColor="white"

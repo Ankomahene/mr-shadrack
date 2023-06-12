@@ -5,11 +5,16 @@ import { SkillCard } from './SkillCard';
 export const About = () => {
   return (
     <>
-      <Heading id="moreAboutMe" my="2rem" size={{ base: 'md', lg: 'lg' }}>
+      <Heading id="about" my="2rem" size={{ base: 'md', lg: 'lg' }}>
         More About me
       </Heading>
 
-      <Flex align="center" gap="6" flexDir={{ base: 'column', lg: 'row' }}>
+      <Flex
+        align="center"
+        gap="6"
+        flexDir={{ base: 'column', lg: 'row' }}
+        id="summary"
+      >
         <Box w={{ base: '100%', lg: '15%' }}>Summary</Box>
         <Box w="80%" p={{ base: '1rem', lg: '2rem' }} borderLeft="1px">
           Experienced and dedicated software engineer with a strong focus on
@@ -29,7 +34,12 @@ export const About = () => {
         </Box>
       </Flex>
 
-      <Flex align="center" gap="6" flexDir={{ base: 'column', lg: 'row' }}>
+      <Flex
+        align="center"
+        gap="6"
+        flexDir={{ base: 'column', lg: 'row' }}
+        id="skills"
+      >
         <Box w={{ base: '100%', lg: '15%' }} pt="2rem">
           Skills
         </Box>
