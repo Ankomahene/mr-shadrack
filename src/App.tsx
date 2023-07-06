@@ -7,6 +7,7 @@ import { Projects } from './components/Projects';
 import { Footer } from './components/Footer';
 import { ResumeViewer } from './components/ResumeViewer';
 import { Navigation } from './components/Navigation';
+import { Form } from './components/Form';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
       </Box>
       <Box my="4rem" py="2rem">
         <Projects />
+      </Box>
+
+      <Box my="4rem" py="2rem">
+        <Form />
       </Box>
       <Footer />
     </>
