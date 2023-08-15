@@ -95,10 +95,24 @@ export const otherSkills: ISkill[] = [
 export const projects: IProject[] = [
   {
     imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709323/mr-shadrack/uzlkeuphh95pyi9ckxm0.jpg',
-    name: 'Pepe Dame',
-    description: 'Two player/Team Board Game',
-    link: 'https://pepe-dame.netlify.app/',
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
+    name: 'Dronehub',
+    description: 'Everything about drones',
+    link: 'https://dronehub.netlify.app/',
+  },
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1689539668/imgs/c7rdukuegnl8nrmurtvv.png',
+    name: 'Hands for Seniors',
+    description: 'Non-profit Organization aimed to support at risk',
+    link: 'https://hands-for-seniors.netlify.app/',
+  },
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710880/mr-shadrack/q2qz8b72933nnschayva.png',
+    name: 'MS Buy',
+    description: 'E-Commerce Website',
+    link: 'http://ms-buy.netlify.app/',
   },
   {
     imageUrl:
@@ -137,13 +151,6 @@ export const projects: IProject[] = [
   },
   {
     imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
-    name: 'Dronehub',
-    description: 'Everything about drones',
-    link: 'https://dronehub.netlify.app/',
-  },
-  {
-    imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710404/mr-shadrack/ouoqbrdjbo1fxqbvbmjg.jpg',
     name: 'Playground',
     description: 'Practice HTML and CSS',
@@ -158,11 +165,12 @@ export const projects: IProject[] = [
   },
   {
     imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710880/mr-shadrack/q2qz8b72933nnschayva.png',
-    name: 'MS Buy',
-    description: 'E-Commerce Website',
-    link: 'http://ms-buy.netlify.app/',
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709323/mr-shadrack/uzlkeuphh95pyi9ckxm0.jpg',
+    name: 'Pepe Dame',
+    description: 'Two player/Team Board Game',
+    link: 'https://pepe-dame.netlify.app/',
   },
+
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685712543/mr-shadrack/eq6y5fteadpczbhofkhe.jpg',
