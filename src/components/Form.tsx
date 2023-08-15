@@ -30,7 +30,7 @@ export const Form = () => {
         p="1rem"
         rounded="sm"
       >
-        <form name="contact" netlify>
+        <form name="contact">
           <Box my="1rem">
             <Text m="10px">Name</Text>
             <Input type="text" name="name" placeholder="John Den" required />
