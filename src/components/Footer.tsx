@@ -26,7 +26,7 @@ export const Footer = () => {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Image src="mr-shadrack-dark.png" boxSize="70px" />
+        <Image src="mr-shadrack-ttui-theme.png" boxSize="70px" />
         <Box textAlign="center">
           <Text>
             © {new Date().getFullYear()} Shadrack Ankomahene. All rights
@@ -35,7 +35,7 @@ export const Footer = () => {
           <Link
             href="mailto: ankomaheneshadrack@gmail.com"
             fontSize="sm"
-            color="brand.500"
+            color="brand.700"
           >
             ankomaheneshadrack@gmail.com
           </Link>

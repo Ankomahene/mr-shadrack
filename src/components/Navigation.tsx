@@ -78,10 +78,10 @@ export const Navigation = () => {
       right={{ base: 8, lg: 5 }}
       zIndex={100}
       fontSize="sm"
-      bgColor="rgba(36,99,235, 0.5)"
+      bgColor="white"
       color="white"
       shadow="lg"
-      borderColor="white"
+      borderColor="gray.200"
       borderWidth="1px"
       borderStyle="dashed"
       backdropFilter="blur(8px) saturate(100%)"
@@ -171,15 +171,20 @@ const CollapsedNavigation = () => {
     <Box>
       <Flex flexDir={{ base: 'row', lg: 'column' }} gap={6} textAlign="center">
         {sections.map((section) => (
-          <Link to={section.link} smooth={true} duration={1000}>
+          <Link
+            key={section.link}
+            to={section.link}
+            smooth={true}
+            duration={1000}
+          >
             <Button
-              bgColor="white"
+              bgColor="brand.400"
               w={10}
               h={10}
               p="0"
               rounded="full"
               title={section.title}
-              color="brand.500"
+              color="gray.700"
             >
               {section.icon}
             </Button>

@@ -14,7 +14,7 @@ export const Form = () => {
       <Box
         bgColor="brand.500"
         p="2rem"
-        color="white"
+        color="black"
         textAlign="center"
         id="projects"
         h="250px"
@@ -30,7 +30,7 @@ export const Form = () => {
         p="1rem"
         rounded="sm"
       >
-        <form name="contact" netlify>
+        <form name="contact">
           <Box my="1rem">
             <Text m="10px">Name</Text>
             <Input type="text" name="name" placeholder="John Den" required />
@@ -56,7 +56,7 @@ export const Form = () => {
             <Button
               _hover={{ bgColor: 'brand.600' }}
               bgColor="brand.500"
-              color="gray.100"
+              color="black"
               w="100%"
               type="submit"
             >

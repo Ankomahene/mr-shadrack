@@ -50,13 +50,14 @@ export const ProjectCard = ({
           <Link href={link} isExternal={true}>
             <Button
               size="sm"
-              color="brand.500"
-              bgColor="blue.100"
+              color="brand.600"
+              variant="outline"
+              borderColor="brand.600"
               display="flex"
               alignItems="center"
               px="1rem"
               rounded="sm"
-              _hover={{ ccolor: 'brand.500', bgColor: 'blue.100' }}
+              _hover={{ color: 'black', bgColor: 'brand.500' }}
             >
               <Text mx="5px">View</Text>
               <BiLinkExternal />

@@ -22,8 +22,8 @@
   border-image-slice: 1;
   border-image-source: linear-gradient(
     to right,
-    hsl(221, 83%, 53%),
-    hsl(221, 83%, 73%)
+    hsl(77, 76%, 59%),
+    hsl(77, 100%, 66%)
   );
   animation: tilt 5s infinite linear;
 }

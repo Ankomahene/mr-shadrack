@@ -21,7 +21,7 @@ export const Hero = () => {
           <Link to="resume" smooth={true} duration={1000}>
             <Button
               bgColor="brand.500"
-              color="white"
+              color="black"
               rounded="sm"
               minW="200px"
               h="50px"
@@ -36,13 +36,14 @@ export const Hero = () => {
 
           <Link to="about" smooth={true} duration={1000}>
             <Button
-              color="brand.500"
+              color="brand.700"
               bgColor="white"
               variant="outline"
               borderColor="brand.blue"
               rounded="sm"
               minW="200px"
               h="50px"
+              _hover={{ bgColor: 'brand.400' }}
             >
               More About me
             </Button>
@@ -60,7 +61,7 @@ export const Hero = () => {
       >
         <Image
           transform="scaleX(-1)"
-          src="illustration1.svg"
+          src="illus-ttui.svg"
           alt=""
           boxSize={{
             base: '200px',

@@ -13,7 +13,7 @@ export const Experience = () => {
         flexDir="column"
         justify="center"
         align="center"
-        bgColor="brand.700"
+        bgColor="black"
         boxSize={{ base: '250px' }}
         py={{ base: '2rem', lg: '0' }}
         px="4rem"
@@ -29,7 +29,7 @@ export const Experience = () => {
       <Flex p="2rem" gap="6" flexDir={{ base: 'column', lg: 'row' }}>
         <Box w={{ base: '100%', lg: '50%' }}>
           <Box px="1rem">
-            <FaLaptopCode size="2.5rem" color="#10a566" />
+            <FaLaptopCode size="2.5rem" color="#8d8dcc" />
           </Box>
           <Heading my="0.5rem" size={{ base: 'md', lg: 'lg' }}>
             Frontend Developer
@@ -42,7 +42,7 @@ export const Experience = () => {
 
         <Box w={{ base: '100%', lg: '50%' }}>
           <Box px="1rem">
-            <FaPenNib size="2.5rem" color="#2563eb" />
+            <FaPenNib size="2.5rem" color="#8d8dcc" />
           </Box>
           <Heading my="0.5rem" size={{ base: 'md', lg: 'lg' }}>
             Graphic Design

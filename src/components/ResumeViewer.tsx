@@ -12,7 +12,7 @@ export const ResumeViewer = () => {
       <Box
         bgColor="brand.500"
         p="2rem"
-        color="white"
+        color="black"
         textAlign="center"
         h="250px"
         id="resume"
