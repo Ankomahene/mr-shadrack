@@ -56,14 +56,14 @@ export const Birthday = () => {
       {sent ? (
         <SentAlert />
       ) : (
-        <Box w={{ base: '100%', lg: '80%' }} mx="auto">
+        <Box w={{ base: '100%', lg: '80%' }} mx={{ base: '1rem', md: 'auto' }}>
           <Textarea
             placeholder="Type your message here"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={12}
           ></Textarea>
-          <Flex align="center" my={4}>
+          <Flex align="center" my={4} mx={{ base: '1rem', md: 'auto' }}>
             {!show && (
               <Text mr="5px">If you want me to know who wrote it, </Text>
             )}
@@ -80,6 +80,7 @@ export const Birthday = () => {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              mx={{ base: '1rem', md: 'auto' }}
             />
           )}
 
