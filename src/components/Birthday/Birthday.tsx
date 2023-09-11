@@ -84,6 +84,7 @@ export const Birthday = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               mx={{ base: '1rem', md: 'auto' }}
+              width="90%"
             />
           )}
 
