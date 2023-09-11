@@ -1,19 +1,19 @@
 import {
-  Textarea,
-  Flex,
   Box,
-  Text,
   Button,
+  Flex,
   Input,
+  Text,
+  Textarea,
   useToast,
 } from '@chakra-ui/react';
+import emailjs from '@emailjs/browser';
+import { useState } from 'react';
 import { BiSend } from 'react-icons/bi';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 import { BirthdayHero } from './BirthdayHero';
-import { useState } from 'react';
 import { SentAlert } from './SentAlert';
-import emailjs from '@emailjs/browser';
 
 export const Birthday = () => {
   const [sent, setSent] = useState(false);
