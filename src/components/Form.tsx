@@ -6,9 +6,50 @@ import {
   Input,
   Text,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
+import { useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { SentAlertMain } from './SentAlert';
 
 export const Form = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [sent, setSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const toast = useToast();
+
+  const handleSendMessage = () => {
+    if (message && name && email) {
+      setIsSending(true);
+      emailjs
+        .send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          {
+            name,
+            email,
+            message,
+          },
+          import.meta.env.VITE_EMAILJS_PUBLIC_ID
+        )
+        .then(() => {
+          setSent(true);
+          setIsSending(false);
+        })
+        .catch((e) => {
+          setIsSending(false);
+        });
+    } else {
+      toast({
+        title: 'One of the fields is empty',
+        status: 'error',
+        position: 'top',
+      });
+    }
+  };
+
   return (
     <Box>
       <Box
@@ -30,40 +71,58 @@ export const Form = () => {
         p="1rem"
         rounded="sm"
       >
-        <form name="contact">
-          <Box my="1rem">
-            <Text m="10px">Name</Text>
-            <Input type="text" name="name" placeholder="John Den" required />
-          </Box>
-          <Box my="1rem">
-            <Text m="10px">Email</Text>
-            <Input
-              type="email"
-              name="email"
-              placeholder="username@example.com"
-              required
-            />
-          </Box>
-          <Box my="1rem">
-            <Text m="10px">Message</Text>
-            <Textarea
-              name="message"
-              placeholder="Type your message here"
-              required
-            />
-          </Box>
-          <Box my="1rem">
-            <Button
-              _hover={{ bgColor: 'brand.600' }}
-              bgColor="brand.500"
-              color="gray.100"
-              w="100%"
-              type="submit"
-            >
-              Send
-            </Button>
-          </Box>
-        </form>
+        {sent ? (
+          <SentAlertMain />
+        ) : (
+          <div>
+            <Box my="1rem">
+              <Text m="10px">Name</Text>
+              <Input
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Jane Den"
+                required
+              />
+            </Box>
+            <Box my="1rem">
+              <Text m="10px">Email</Text>
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="username@example.com"
+                required
+              />
+            </Box>
+            <Box my="1rem">
+              <Text m="10px">Message</Text>
+              <Textarea
+                name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message here"
+                required
+              />
+            </Box>
+            <Box my="1rem">
+              <Button
+                _hover={{ bgColor: 'brand.600' }}
+                bgColor="brand.500"
+                color="gray.100"
+                w="100%"
+                type="button"
+                onClick={handleSendMessage}
+                disabled={isSending}
+                opacity={isSending ? 0.2 : 1}
+              >
+                {isSending ? 'Sending Message' : 'Send'}
+              </Button>
+            </Box>
+          </div>
+        )}
       </Card>
     </Box>
   );

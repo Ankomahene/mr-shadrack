@@ -83,7 +83,7 @@ export const Birthday = () => {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              mx={{ base: '1rem', md: 'auto' }}
+              mx="1rem"
               width="90%"
             />
           )}

@@ -170,8 +170,13 @@ const CollapsedNavigation = () => {
   return (
     <Box>
       <Flex flexDir={{ base: 'row', lg: 'column' }} gap={6} textAlign="center">
-        {sections.map((section) => (
-          <Link to={section.link} smooth={true} duration={1000}>
+        {sections.map((section, i) => (
+          <Link
+            key={section.link + i}
+            to={section.link}
+            smooth={true}
+            duration={1000}
+          >
             <Button
               bgColor="white"
               w={10}
