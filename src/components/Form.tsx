@@ -38,7 +38,7 @@ export const Form = () => {
           setSent(true);
           setIsSending(false);
         })
-        .catch((e) => {
+        .catch(() => {
           setIsSending(false);
         });
     } else {
