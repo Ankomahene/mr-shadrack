@@ -98,7 +98,7 @@ export const projects: IProject[] = [
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
     name: 'Dronehub',
     description: 'Everything about drones',
-    link: 'https://dronehubgh.com',
+    link: 'https://dronehubgh.netlify.app/',
   },
   {
     imageUrl:
