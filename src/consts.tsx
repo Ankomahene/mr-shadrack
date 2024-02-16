@@ -100,6 +100,34 @@ export const projects: IProject[] = [
     description: 'Everything about drones',
     link: 'https://dronehubgh.netlify.app/',
   },
+   {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709502/mr-shadrack/bd0qqd95yf0nbl208fue.jpg',
+    name: 'CSS Glassmorphism Generator',
+    description: 'Generate CSS glass effect for Elements',
+    link: 'https://uidynamik.netlify.app/glassmorphism',
+  },
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710734/mr-shadrack/vgz8ml3svot70pt8fkcu.jpg',
+    name: 'Box Shadow Generator',
+    description: 'Generate Cool CSS Box Shadows easily',
+    link: 'https://css-box-shadow-gen.netlify.app/',
+  },
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710404/mr-shadrack/ouoqbrdjbo1fxqbvbmjg.jpg',
+    name: 'Playground',
+    description: 'Practice HTML and CSS',
+    link: 'https://ms-html-css-playground.netlify.app/',
+  },
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709323/mr-shadrack/uzlkeuphh95pyi9ckxm0.jpg',
+    name: 'Pepe Dame',
+    description: 'Two player/Team Board Game',
+    link: 'https://pepe-dame.netlify.app/',
+  },
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1689539668/imgs/c7rdukuegnl8nrmurtvv.png',
@@ -114,13 +142,7 @@ export const projects: IProject[] = [
     description: 'E-Commerce Website',
     link: 'http://ms-buy.netlify.app/',
   },
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709502/mr-shadrack/bd0qqd95yf0nbl208fue.jpg',
-    name: 'CSS Glassmorphism Generator',
-    description: 'Generate CSS glass effect for Elements',
-    link: 'https://uidynamik.netlify.app/glassmorphism',
-  },
+ 
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709676/mr-shadrack/ofa24ogpacgvvzowt6vy.jpg',
@@ -135,13 +157,7 @@ export const projects: IProject[] = [
     description: 'Upload and Share Images',
     link: 'https://ms-image-share.netlify.app/',
   },
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710734/mr-shadrack/vgz8ml3svot70pt8fkcu.jpg',
-    name: 'Box Shadow Generator',
-    description: 'Generate Cool CSS Box Shadows easily',
-    link: 'https://css-box-shadow-gen.netlify.app/',
-  },
+  
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710250/mr-shadrack/cvrhuhzdjmv5mdyy5ihg.jpg',
@@ -149,13 +165,7 @@ export const projects: IProject[] = [
     description: 'Free HTML CSS beautiful buttons to use',
     link: 'https://uidynamik.netlify.app/showcase/buttons',
   },
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710404/mr-shadrack/ouoqbrdjbo1fxqbvbmjg.jpg',
-    name: 'Playground',
-    description: 'Practice HTML and CSS',
-    link: 'https://ms-html-css-playground.netlify.app/',
-  },
+  
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685711395/mr-shadrack/m52kxcpskvsdwjj0phxh.png',
@@ -163,14 +173,6 @@ export const projects: IProject[] = [
     description: 'Open Source React Package',
     link: 'https://ankomahene.github.io/ms_react-progress-bar/',
   },
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709323/mr-shadrack/uzlkeuphh95pyi9ckxm0.jpg',
-    name: 'Pepe Dame',
-    description: 'Two player/Team Board Game',
-    link: 'https://pepe-dame.netlify.app/',
-  },
-
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685712543/mr-shadrack/eq6y5fteadpczbhofkhe.jpg',
