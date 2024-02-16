@@ -19,7 +19,7 @@ export const Experience = () => {
         px="4rem"
       >
         <Box color="white">
-          <Heading size="4xl">4+</Heading>
+          <Heading size="4xl">5</Heading>
           <Text mt="0.5rem">Years</Text>
           <Text>Working</Text>
           <Text>Experience</Text>
