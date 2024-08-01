@@ -29,6 +29,14 @@ export const Stacks = () => {
       <button className="btn btn6">
         <Image src="javascript.svg" alt="" />
       </button>
+
+      <button className="btn btn7">
+        <Image src="nextjs.svg" alt="" />
+      </button>
+
+      <button className="btn btn8">
+        <Image src="tailwind.svg" alt="" />
+      </button>
     </Box>
   );
 };

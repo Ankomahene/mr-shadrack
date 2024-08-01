@@ -45,13 +45,11 @@ export const mainSkills: ISkill[] = [
     label: 'React',
     color: '#32c1ee',
   },
-
   {
-    icon: <FaAngular />,
-    label: 'Angular',
-    color: '#da4353',
+    icon: <SiNextdotjs />,
+    label: 'Next.js',
+    color: '#3d456d',
   },
-
   {
     icon: <SiTypescript />,
     label: 'TypeScript',
@@ -61,9 +59,9 @@ export const mainSkills: ISkill[] = [
 
 export const otherSkills: ISkill[] = [
   {
-    icon: <SiNextdotjs />,
-    label: 'Next.js',
-    color: '#3d456d',
+    icon: <FaAngular />,
+    label: 'Angular',
+    color: '#da4353',
   },
   {
     icon: <SiRedux />,

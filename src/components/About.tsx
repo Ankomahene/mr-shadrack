@@ -17,20 +17,14 @@ export const About = () => {
       >
         <Box w={{ base: '100%', lg: '15%' }}>Summary</Box>
         <Box w="80%" p={{ base: '1rem', lg: '2rem' }} borderLeft="1px">
-          Experienced and dedicated software engineer with a strong focus on
-          frontend development, boasting four years of professional experience.
-          Demonstrating a profound ability to conceptualize and construct
-          responsive web applications, I possess a comprehensive skill set
-          encompassing HTML, CSS, JavaScript, React, Angular, and Typescript.
+          Experienced and dedicated software engineer specializing in frontend
+          development, with five years of professional experience. Proficient in
+          HTML, CSS, JavaScript, React.js, Next.js, Angular, and TypeScript.
           <br />
           <br />
-          Moreover, my extensive expertise in UI/UX ensures an exceptional user
-          experience.
-          <br />
-          <br />
-          My unwavering commitment to problem-solving, coupled with an ardent
-          passion for continuous learning and personal growth, further fuel my
-          drive for excellence in software development.
+          Passionate about problem-solving and driven by excellence, I bring a
+          wealth of expertise and a strong focus on UI/UX to any software
+          development team.
         </Box>
       </Flex>
 
@@ -71,7 +65,7 @@ export const About = () => {
             borderColor="gray.300"
             py="1rem"
           >
-            All Other Powers
+            Other Powers
           </Text>
           <Flex gap={4} wrap="wrap">
             {otherSkills.map(({ icon, label, color }, i) => (
