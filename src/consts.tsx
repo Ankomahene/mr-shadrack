@@ -95,12 +95,19 @@ export const otherSkills: ISkill[] = [
 export const projects: IProject[] = [
   {
     imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1722523645/mr-shadrack/sumgqbomjugj7zrydxsy.jpg',
+    name: 'FMT Design and Print',
+    description: 'Designing and Printing Online store',
+    link: 'https://fmtdesignprint.com/',
+  },
+  {
+    imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
     name: 'Dronehub',
     description: 'Everything about drones',
-    link: 'https://dronehubgh.netlify.app/',
+    link: 'https://dronehubgh.com/',
   },
-   {
+  {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709502/mr-shadrack/bd0qqd95yf0nbl208fue.jpg',
     name: 'CSS Glassmorphism Generator',
@@ -142,14 +149,6 @@ export const projects: IProject[] = [
     description: 'E-Commerce Website',
     link: 'http://ms-buy.netlify.app/',
   },
- 
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685709676/mr-shadrack/ofa24ogpacgvvzowt6vy.jpg',
-    name: 'UI Dynamik',
-    description: 'UI Designs and More',
-    link: 'https://uidynamik.netlify.app/',
-  },
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710575/mr-shadrack/wr4q8ubop75tkbgk521t.jpg',
@@ -157,7 +156,7 @@ export const projects: IProject[] = [
     description: 'Upload and Share Images',
     link: 'https://ms-image-share.netlify.app/',
   },
-  
+
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710250/mr-shadrack/cvrhuhzdjmv5mdyy5ihg.jpg',
@@ -165,7 +164,7 @@ export const projects: IProject[] = [
     description: 'Free HTML CSS beautiful buttons to use',
     link: 'https://uidynamik.netlify.app/showcase/buttons',
   },
-  
+
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685711395/mr-shadrack/m52kxcpskvsdwjj0phxh.png',

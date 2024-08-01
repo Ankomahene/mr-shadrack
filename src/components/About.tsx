@@ -87,7 +87,7 @@ export const About = () => {
           <Text my="2rem">
             {' '}
             These are not the only powers I have. Check out{' '}
-            <Link href="resume.pdf" download="shadrack-resume.pdf">
+            <Link href="resume-2024.pdf" download="shadrack-resume.pdf">
               <Button variant="link" color="brand.600" mx="3px">
                 my resume
               </Button>
