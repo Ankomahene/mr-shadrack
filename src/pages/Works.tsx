@@ -236,7 +236,7 @@ const works: Work[] = [
 export const Works = () => {
   return (
     <Box w={{ base: '100%', lg: '80%' }} mx="auto" p="2rem">
-      <Heading mb={8}>UI/UX Works</Heading>
+      <Heading mb={8}>UI/UX Designs</Heading>
       <WorksGrid works={works} />
     </Box>
   );
