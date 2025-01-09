@@ -5,6 +5,28 @@ import { Work } from '../types/Work';
 const works: Work[] = [
   {
     id: crypto.randomUUID(),
+    title: 'Dashboard',
+    description: 'Dashboard Dark theme',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736424043/ui-ux/Cover_qtkifh.png',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/0_eht1d5.png',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423988/ui-ux/3_ayjkad.png',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/1_qzqmje.png',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/2_dsiln0.png',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/5_q02d7o.png',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423988/ui-ux/4_dabv21.png',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Dashboard', 'Dark theme'],
+    details: {
+      client: '',
+      role: '',
+      duration: '3 months',
+      description: 'Dark theme dashboard',
+    },
+  },
+  {
+    id: crypto.randomUUID(),
     title: 'Members',
     description: 'Members Dashboard',
     thumbnail:
@@ -19,6 +41,31 @@ const works: Work[] = [
       duration: '3 days',
       description:
         'This members dashboard presents a clean and intuitive team management interface. The layout features a left sidebar for navigation and a main content area displaying team member cards in a grid format. Each member card shows essential information including profile picture/avatar, name, role',
+    },
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'UI Elements',
+    description: 'UI Design Elements',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425020/ui-ux/5741225_kqwstz.jpg',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425020/ui-ux/5741225_kqwstz.jpg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_5_yw7mmq.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_6_q2adgs.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_6_q2adgs.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_7_vba0vj.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_8_bc58aa.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425271/ui-ux/Asset_2_tdzzc3.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425273/ui-ux/Asset_4_zkreu4.svg',
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736425273/ui-ux/Asset_1_hevatt.svg',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Elements', 'Components'],
+    details: {
+      client: '',
+      role: '',
+      duration: '6 hours',
+      description: 'UI Design Elements',
     },
   },
   {
@@ -110,6 +157,78 @@ const works: Work[] = [
       duration: '1 hour',
       description:
         'UI for Job Cards, featuring a clean interface that showcases open positions',
+    },
+  },
+
+  {
+    id: crypto.randomUUID(),
+    title: 'UI Elements',
+    description: 'Gradient UI Elements',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736424737/ui-ux/5810433_x4zgiv.jpg',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736424737/ui-ux/5810433_x4zgiv.jpg',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Elements', 'Components', 'Gradient'],
+    details: {
+      client: '',
+      role: '',
+      duration: '4 hours',
+      description: 'Gradient UI Elements',
+    },
+  },
+
+  {
+    id: crypto.randomUUID(),
+    title: 'Kanban Board',
+    description: 'Kanban board Dark theme',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423988/ui-ux/3_ayjkad.png',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423988/ui-ux/3_ayjkad.png',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Dashboard', 'Dark theme'],
+    details: {
+      client: '',
+      role: '',
+      duration: '3 days',
+      description: 'Kanban board Dark theme',
+    },
+  },
+
+  {
+    id: crypto.randomUUID(),
+    title: 'Dashboard Charts and Stats',
+    description: 'Dashboard Charts and Stats',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/1_qzqmje.png',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/1_qzqmje.png',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Dashboard', 'Charts', 'Stats'],
+    details: {
+      client: '',
+      role: '',
+      duration: '1 months',
+      description: 'Dashboard Charts and Stats',
+    },
+  },
+
+  {
+    id: crypto.randomUUID(),
+    title: 'Users Dashboard',
+    description: 'Users Dashboard Dark theme',
+    thumbnail:
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/5_q02d7o.png',
+    images: [
+      'https://res.cloudinary.com/dicme7cio/image/upload/v1736423987/ui-ux/5_q02d7o.png',
+    ],
+    tags: ['UI/UX', 'Web Design', 'Dashboard', 'Dark theme', 'Users'],
+    details: {
+      client: '',
+      role: '',
+      duration: '1 week',
+      description: 'Users Dashboard Dark theme',
     },
   },
 ];

@@ -40,6 +40,7 @@ const WorkDrawer = ({ isOpen, onClose, work }: WorkDrawerProps) => {
                     src={image}
                     alt={`${work.title} - ${index + 1}`}
                     borderRadius="lg"
+                    border="1px solid #e2e8f0"
                     w={{ base: '90%', lg: '80%' }}
                     mx="auto"
                   />
