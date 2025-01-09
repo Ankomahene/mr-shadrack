@@ -9,7 +9,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { SentAlertMain } from './SentAlert';
 
 export const Form = () => {
@@ -20,27 +19,36 @@ export const Form = () => {
   const [isSending, setIsSending] = useState(false);
   const toast = useToast();
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (message && name && email) {
       setIsSending(true);
-      emailjs
-        .send(
-          import.meta.env.VITE_EMAILJS_SERVICE_ID,
-          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-          {
+      try {
+        const response = await fetch('/.netlify/functions/send-email', {
+          method: 'POST',
+          body: JSON.stringify({
             name,
             email,
             message,
-          },
-          import.meta.env.VITE_EMAILJS_PUBLIC_ID
-        )
-        .then(() => {
-          setSent(true);
-          setIsSending(false);
-        })
-        .catch(() => {
-          setIsSending(false);
+          }),
         });
+
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+
+        setSent(true);
+        setName('');
+        setEmail('');
+        setMessage('');
+      } catch (error) {
+        toast({
+          title: 'Failed to send message',
+          status: 'error',
+          position: 'top',
+        });
+      } finally {
+        setIsSending(false);
+      }
     } else {
       toast({
         title: 'One of the fields is empty',
@@ -82,7 +90,7 @@ export const Form = () => {
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Jane Den"
+                placeholder="Jane Doe"
                 required
               />
             </Box>
@@ -115,10 +123,10 @@ export const Form = () => {
                 w="100%"
                 type="button"
                 onClick={handleSendMessage}
-                disabled={isSending}
-                opacity={isSending ? 0.2 : 1}
+                isLoading={isSending}
+                loadingText="Sending Message"
               >
-                {isSending ? 'Sending Message' : 'Send'}
+                Send
               </Button>
             </Box>
           </div>
