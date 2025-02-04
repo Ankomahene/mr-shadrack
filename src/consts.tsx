@@ -100,6 +100,13 @@ export const projects: IProject[] = [
   },
   {
     imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1738673722/x4tvgvoin2dnfmhvydq1.png',
+    name: 'CaseCanvas',
+    description: 'Transform Your Phone into a Masterpiece',
+    link: 'https://case-canvas-one.vercel.app/',
+  },
+  {
+    imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
     name: 'Dronehub',
     description: 'Everything about drones',
