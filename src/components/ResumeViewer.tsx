@@ -40,7 +40,7 @@ export const ResumeViewer = () => {
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.7.107/build/pdf.worker.js">
           <div className="h-[700px]">
             <Viewer
-              fileUrl="/resume-2024.pdf"
+              fileUrl="/resume-02-25.pdf"
               plugins={[defaultLayoutPluginInstance]}
             />
           </div>

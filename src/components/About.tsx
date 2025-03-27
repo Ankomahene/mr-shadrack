@@ -89,7 +89,7 @@ export const About = () => {
 
           <p className="my-8 text-lg">
             These are not the only powers I have. Check out{' '}
-            <a href="/resume-2024.pdf" download="shadrack-resume.pdf">
+            <a href="/resume-02-25.pdf" download="shadrack-resume.pdf">
               <Button variant="link" className="text-primary mx-1 px-1">
                 my resume
               </Button>
