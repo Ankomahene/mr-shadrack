@@ -1,53 +1,62 @@
-import { Box, Button, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { mainSkills, otherSkills } from '../consts';
 import { SkillCard } from './SkillCard';
+import { motion } from 'framer-motion';
+import { Button } from './ui/button';
 
 export const About = () => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
   return (
-    <>
-      <Heading id="about" my="2rem" size={{ base: 'md', lg: 'lg' }}>
+    <section className="py-12">
+      <h2
+        id="about"
+        className="text-2xl md:text-3xl font-bold my-8 text-primary"
+      >
         More About me
-      </Heading>
+      </h2>
 
-      <Flex
-        align="center"
-        gap="6"
-        flexDir={{ base: 'column', lg: 'row' }}
-        id="summary"
-      >
-        <Box w={{ base: '100%', lg: '15%' }}>Summary</Box>
-        <Box w="80%" p={{ base: '1rem', lg: '2rem' }} borderLeft="1px">
-          Experienced and dedicated software engineer specializing in frontend
-          development, with five years of professional experience. Proficient in
-          HTML, CSS, JavaScript, React.js, Next.js, Angular, and TypeScript.
-          <br />
-          <br />
-          Passionate about problem-solving and driven by excellence, I bring a
-          wealth of expertise and a strong focus on UI/UX to any software
-          development team.
-        </Box>
-      </Flex>
+      <div className="flex flex-col lg:flex-row gap-6 my-8" id="summary">
+        <div className="w-full lg:w-1/5 text-xl font-semibold text-primary/80">
+          Summary
+        </div>
+        <div className="w-full lg:w-4/5 p-4 md:p-8 border-l border-primary/20 text-lg">
+          <p className="text-muted-foreground">
+            Experienced and dedicated software engineer specializing in frontend
+            development, with five years of professional experience. Proficient
+            in HTML, CSS, JavaScript, React.js, Next.js, Angular, and
+            TypeScript.
+          </p>
+          <p className="text-muted-foreground mt-4">
+            Passionate about problem-solving and driven by excellence, I bring a
+            wealth of expertise and a strong focus on UI/UX to any software
+            development team.
+          </p>
+        </div>
+      </div>
 
-      <Flex
-        align="center"
-        gap="6"
-        flexDir={{ base: 'column', lg: 'row' }}
-        id="skills"
-      >
-        <Box w={{ base: '100%', lg: '15%' }} pt="2rem">
+      <div className="flex flex-col lg:flex-row gap-6 my-8" id="skills">
+        <div className="w-full lg:w-1/5 text-xl font-semibold pt-8 text-primary/80">
           Skills
-        </Box>
-        <Box w="80%" p={{ base: '1rem', lg: '2rem' }} borderLeft="1px">
-          <Text
-            my="1rem"
-            fontWeight="bold"
-            borderBottom="1px"
-            borderColor="gray.300"
-            py="1rem"
-          >
+        </div>
+        <div className="w-full lg:w-4/5 p-4 md:p-8 border-l border-primary/20">
+          <h3 className="text-xl font-semibold my-4 pb-4 border-b">
             Super Powers
-          </Text>
-          <Flex gap={4} wrap="wrap">
+          </h3>
+          <motion.div
+            className="flex flex-wrap gap-4"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             {mainSkills.map(({ icon, label, color }, i) => (
               <SkillCard
                 key={label + i}
@@ -56,18 +65,18 @@ export const About = () => {
                 color={color}
               />
             ))}
-          </Flex>
+          </motion.div>
 
-          <Text
-            my="1rem"
-            fontWeight="bold"
-            borderBottom="1px"
-            borderColor="gray.300"
-            py="1rem"
-          >
+          <h3 className="text-xl font-semibold my-4 pb-4 border-b mt-8">
             Other Powers
-          </Text>
-          <Flex gap={4} wrap="wrap">
+          </h3>
+          <motion.div
+            className="flex flex-wrap gap-4"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             {otherSkills.map(({ icon, label, color }, i) => (
               <SkillCard
                 key={label + i}
@@ -76,20 +85,19 @@ export const About = () => {
                 color={color}
               />
             ))}
-          </Flex>
+          </motion.div>
 
-          <Text my="2rem">
-            {' '}
+          <p className="my-8 text-lg">
             These are not the only powers I have. Check out{' '}
-            <Link href="resume-2024.pdf" download="shadrack-resume.pdf">
-              <Button variant="link" color="brand.600" mx="3px">
+            <a href="/resume-2024.pdf" download="shadrack-resume.pdf">
+              <Button variant="link" className="text-primary mx-1 px-1">
                 my resume
               </Button>
-            </Link>
+            </a>
             to see more
-          </Text>
-        </Box>
-      </Flex>
-    </>
+          </p>
+        </div>
+      </div>
+    </section>
   );
 };

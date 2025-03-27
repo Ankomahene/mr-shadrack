@@ -1,6 +1,6 @@
-import { Box, Heading } from '@chakra-ui/react';
 import { WorksGrid } from '../components/works/WorksGrid';
 import { Work } from '../types/Work';
+import { motion } from 'framer-motion';
 
 const works: Work[] = [
   {
@@ -235,9 +235,16 @@ const works: Work[] = [
 
 export const Works = () => {
   return (
-    <Box w={{ base: '100%', lg: '80%' }} mx="auto" p="2rem">
-      <Heading mb={8}>UI/UX Designs</Heading>
+    <div className="w-full lg:w-4/5 mx-auto p-8">
+      <motion.h1
+        className="text-3xl md:text-4xl font-bold mb-8 text-primary"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        UI/UX Designs
+      </motion.h1>
       <WorksGrid works={works} />
-    </Box>
+    </div>
   );
 };

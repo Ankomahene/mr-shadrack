@@ -1,37 +1,41 @@
-import { Box, Flex, Link as ChakraLink, Image } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ThemeToggle } from './theme-toggle';
 
 export const Navigation = () => {
   return (
-    <Flex
-      as="nav"
-      align="center"
-      justify="space-between"
-      wrap="wrap"
-      mb={8}
-      p={8}
-      w={{ base: '100%', lg: '80%' }}
-      mx="auto"
-    >
-      <Flex align="center">
-        <ChakraLink as={RouterLink} to="/" fontSize="lg" fontWeight="bold">
-          <Image src="mr-shadrack-dark.png" boxSize="70px" />
-        </ChakraLink>
-      </Flex>
-
-      <Box display="flex" gap={4}>
-        <ChakraLink
-          as={RouterLink}
-          to="/ui-designs"
-          fontSize="lg"
-          fontWeight="bold"
-          textDecoration="none"
-          _hover={{ textDecoration: 'none' }}
+    <div className="w-full lg:w-4/5 mx-auto p-8 mb-8">
+      <div className="flex items-center justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center"
         >
-          UI/UX Designs
-        </ChakraLink>
-        {/* Add other navigation items */}
-      </Box>
-    </Flex>
+          <RouterLink to="/" className="font-bold text-lg">
+            <img
+              src="/mr-shadrack-dark.png"
+              alt="Logo"
+              className="h-[70px] w-auto dark:invert"
+            />
+          </RouterLink>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex items-center gap-4"
+        >
+          <RouterLink
+            to="/ui-designs"
+            className="text-lg font-bold hover:text-primary transition-colors"
+          >
+            UI/UX Designs
+          </RouterLink>
+          <ThemeToggle />
+        </motion.div>
+      </div>
+    </div>
   );
 };

@@ -1,19 +1,7 @@
-import {
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Image,
-  Text,
-  VStack,
-  Grid,
-  GridItem,
-  Tag,
-  Box,
-} from '@chakra-ui/react';
 import { Work } from '../../types/Work';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet';
+import { Badge } from '../ui/badge';
 
 interface WorkDrawerProps {
   isOpen: boolean;
@@ -25,76 +13,77 @@ const WorkDrawer = ({ isOpen, onClose, work }: WorkDrawerProps) => {
   if (!work) return null;
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} size="lg" placement="bottom">
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerCloseButton />
-        <DrawerHeader>{work.title}</DrawerHeader>
-        <DrawerBody>
-          <Grid templateColumns={{ md: '1fr', lg: '3fr 1fr' }} gap={8}>
-            <GridItem>
-              <VStack spacing={8} align="start">
-                {work.images.map((image, index) => (
-                  <Image
-                    key={index}
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent
+        className="h-[90vh] overflow-y-auto sm:max-w-full md:max-w-4xl"
+        side="bottom"
+      >
+        <SheetHeader className="pb-4">
+          <SheetTitle className="text-2xl font-bold text-primary">
+            {work.title}
+          </SheetTitle>
+        </SheetHeader>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-8">
+          <div className="space-y-8">
+            <AnimatePresence>
+              {work.images.map((image, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <img
                     src={image}
                     alt={`${work.title} - ${index + 1}`}
-                    borderRadius="lg"
-                    border="1px solid #e2e8f0"
-                    w={{ base: '90%', lg: '80%' }}
-                    mx="auto"
+                    className="rounded-lg border border-border w-full md:w-[80%] mx-auto shadow-md"
                   />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          <div className="space-y-6 sticky top-4">
+            <div className="w-full">
+              <h4 className="font-semibold mb-2">About</h4>
+              <p className="text-muted-foreground">
+                {work.details.description}
+              </p>
+            </div>
+
+            {work.details.client && (
+              <div className="w-full">
+                <h4 className="font-semibold mb-2">Client</h4>
+                <p className="text-muted-foreground">{work.details.client}</p>
+              </div>
+            )}
+
+            {work.details.role && (
+              <div className="w-full">
+                <h4 className="font-semibold mb-2">Role</h4>
+                <p className="text-muted-foreground">{work.details.role}</p>
+              </div>
+            )}
+
+            <div className="w-full">
+              <h4 className="font-semibold mb-2">Tags</h4>
+              <div className="flex flex-wrap gap-2">
+                {work.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="ghost"
+                    className="text-primary border-primary/20"
+                  >
+                    {tag}
+                  </Badge>
                 ))}
-              </VStack>
-            </GridItem>
-            <GridItem>
-              <VStack
-                spacing={6}
-                position="sticky"
-                top={4}
-                w={{ base: '90%', lg: '80%' }}
-                mx="auto"
-              >
-                <Box w="100%">
-                  <Text fontWeight="bold" mb={2}>
-                    About
-                  </Text>
-                  <Text>{work.details.description}</Text>
-                </Box>
-                {work.details.client && (
-                  <Box w="100%">
-                    <Text fontWeight="bold" mb={2}>
-                      Client
-                    </Text>
-                    <Text>{work.details.client}</Text>
-                  </Box>
-                )}
-                {work.details.role && (
-                  <Box w="100%">
-                    <Text fontWeight="bold" mb={2}>
-                      Role
-                    </Text>
-                    <Text>{work.details.role}</Text>
-                  </Box>
-                )}
-                <Box w="100%">
-                  <Text fontWeight="bold" mb={2}>
-                    Tags
-                  </Text>
-                  <Box>
-                    {work.tags.map((tag) => (
-                      <Tag key={tag} mr={2} mb={2}>
-                        {tag}
-                      </Tag>
-                    ))}
-                  </Box>
-                </Box>
-              </VStack>
-            </GridItem>
-          </Grid>
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 

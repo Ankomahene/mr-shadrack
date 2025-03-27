@@ -1,42 +1,106 @@
-import { Box, Image } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 export const Stacks = () => {
   return (
-    <Box
-      border="1px"
-      borderRadius="50%"
-      borderColor="blue.200"
-      borderStyle="dotted"
-      pos="absolute"
-      boxSize={{ base: '250px', lg: '400px', xl: '500px', '2xl': '650px' }}
-      className="circle"
+    <motion.div
+      initial={{ rotate: 0 }}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
+      className="border border-dotted border-primary/30 rounded-full absolute 
+                 w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] 
+                 xl:w-[500px] xl:h-[500px] 2xl:w-[650px] 2xl:h-[650px]"
     >
-      <button className="btn btn1">
-        <Image src="react.svg" alt="" />
-      </button>
-      <button className="btn btn2">
-        <Image src="angular.svg" alt="" />
-      </button>
-      <button className="btn btn3">
-        <Image src="typescript.svg" alt="" />
-      </button>
-      <button className="btn btn4">
-        <Image src="html5.svg" alt="" />
-      </button>
-      <button className="btn btn5">
-        <Image src="css3.svg" alt="" />
-      </button>
-      <button className="btn btn6">
-        <Image src="javascript.svg" alt="" />
-      </button>
+      <motion.button
+        className="btn btn1"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/react.svg"
+          alt="React"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
 
-      <button className="btn btn7">
-        <Image src="nextjs.svg" alt="" />
-      </button>
+      <motion.button
+        className="btn btn2"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/angular.svg"
+          alt="Angular"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
 
-      <button className="btn btn8">
-        <Image src="tailwind.svg" alt="" />
-      </button>
-    </Box>
+      <motion.button
+        className="btn btn3"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/typescript.svg"
+          alt="TypeScript"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
+
+      <motion.button
+        className="btn btn4"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/html5.svg"
+          alt="HTML5"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
+
+      <motion.button
+        className="btn btn5"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img src="/css3.svg" alt="CSS3" className="w-full h-full dark:invert" />
+      </motion.button>
+
+      <motion.button
+        className="btn btn6"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/javascript.svg"
+          alt="JavaScript"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
+
+      <motion.button
+        className="btn btn7"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/nextjs.svg"
+          alt="Next.js"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
+
+      <motion.button
+        className="btn btn8"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <img
+          src="/tailwind.svg"
+          alt="Tailwind CSS"
+          className="w-full h-full dark:invert"
+        />
+      </motion.button>
+    </motion.div>
   );
 };

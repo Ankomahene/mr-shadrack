@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
 import { Navigation } from './components/Navigation';
 import { Works } from './pages/Works';
 import { Footer } from './components/Footer';
@@ -14,12 +13,14 @@ import { Form } from './components/Form';
 function App() {
   return (
     <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/ui-designs" element={<Works />} />
-      </Routes>
-      <Footer />
+      <div className="min-h-screen bg-background font-sans antialiased">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/ui-designs" element={<Works />} />
+        </Routes>
+        <Footer />
+      </div>
     </Router>
   );
 }
@@ -28,21 +29,21 @@ function App() {
 const Home = () => {
   return (
     <>
-      <Box w={{ base: '100%', lg: '80%' }} mx="auto" p="2rem">
+      <div className="w-full lg:w-4/5 mx-auto p-8">
         <Header />
         <Hero />
         <Experience />
         <About />
-      </Box>
-      <Box my="4rem" py="2rem">
+      </div>
+      <div className="my-16 py-8">
         <ResumeViewer />
-      </Box>
-      <Box my="4rem" py="2rem">
+      </div>
+      <div className="my-16 py-8">
         <Projects />
-      </Box>
-      <Box my="4rem" py="2rem">
+      </div>
+      <div className="my-16 py-8">
         <Form />
-      </Box>
+      </div>
     </>
   );
 };

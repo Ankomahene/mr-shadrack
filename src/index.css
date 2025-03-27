@@ -1,30 +1,74 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 235 100% 63%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 235 100% 63%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 235 100% 63%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 235 100% 63%;
+  }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+/* Custom animations */
 .frame {
-  width: 200px;
-  height: 200px;
-  position: relative;
+  @apply relative w-48 h-48 md:w-60 md:h-60;
   perspective: 800px;
 }
 
 .photo {
-  width: 90%;
-  height: 90%;
-  position: absolute;
+  @apply w-[90%] h-[90%] absolute shadow-lg border-8 border-primary/30;
   transform-style: preserve-3d;
   transform: rotateY(45deg) rotateX(45deg);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border: 10px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    to right,
-    hsl(221, 83%, 53%),
-    hsl(221, 83%, 73%)
-  );
   animation: tilt 5s infinite linear;
 }
 
@@ -42,70 +86,48 @@
 }
 
 .photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  @apply w-full h-full object-contain;
 }
 
 .circle {
-  position: relative;
-  animation: spin 20s infinite linear;
+  @apply relative;
+  animation: spin 20s linear infinite;
 }
 
 .btn {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: transparent;
+  @apply absolute w-7 h-7 rounded-full bg-transparent;
 }
 
 .btn1 {
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @apply top-0 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn2 {
-  top: 15%;
-  left: 85%;
-  transform: translate(-50%, -50%);
+  @apply top-[15%] left-[85%] -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn3 {
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%);
+  @apply top-1/2 left-full -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn4 {
-  top: 85%;
-  left: 85%;
-  transform: translate(-50%, -50%);
+  @apply top-[85%] left-[85%] -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn5 {
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @apply top-full left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn6 {
-  top: 85%;
-  left: 15%;
-  transform: translate(-50%, -50%);
+  @apply top-[85%] left-[15%] -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn7 {
-  top: 50%;
-  left: 0%;
-  transform: translate(-50%, -50%);
+  @apply top-1/2 left-0 -translate-x-1/2 -translate-y-1/2;
 }
 
 .btn8 {
-  top: 17%;
-  left: 12.5%;
-  transform: translate(-50%, -50%);
+  @apply top-[17%] left-[12.5%] -translate-x-1/2 -translate-y-1/2;
 }
 
 @keyframes spin {

@@ -1,30 +1,31 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from '@chakra-ui/react';
+import { CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const SentAlertMain = () => {
   return (
-    <Alert
-      w={{ base: '100%', lg: '80%' }}
-      mx="auto"
-      status="success"
-      variant="subtle"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      textAlign="center"
-      height="200px"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+      className="w-full lg:w-4/5 mx-auto p-6 bg-green-50 dark:bg-green-900/20 
+                 flex flex-col items-center justify-center text-center h-[250px] rounded-md"
     >
-      <AlertIcon boxSize="40px" mr={0} />
-      <AlertTitle mt={4} mb={1} fontSize="lg">
+      <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400 mb-4" />
+      <h3 className="text-xl font-semibold mb-2 text-green-700 dark:text-green-300">
         Message submitted to Mr. Shadrack!
-      </AlertTitle>
-      <AlertDescription maxWidth="sm">
+      </h3>
+      <p className="max-w-md text-green-600 dark:text-green-400">
         Thank you for your message. Will get back to you as soon as possible
-      </AlertDescription>
-    </Alert>
+      </p>
+
+      <motion.div
+        className="mt-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <img src="/thankyou.gif" alt="Thank you" className="h-16 w-auto" />
+      </motion.div>
+    </motion.div>
   );
 };

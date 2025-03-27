@@ -1,6 +1,5 @@
-import { ReactIcon } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
-import { FaAngular, FaCss3, FaHtml5, FaSass } from 'react-icons/fa';
+import { FaAngular, FaCss3, FaHtml5, FaSass, FaReact } from 'react-icons/fa';
 import {
   SiTypescript,
   SiJavascript,
@@ -41,7 +40,7 @@ export const mainSkills: ISkill[] = [
     color: '#f7b500',
   },
   {
-    icon: <ReactIcon />,
+    icon: <FaReact />,
     label: 'React',
     color: '#32c1ee',
   },

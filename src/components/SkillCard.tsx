@@ -1,5 +1,5 @@
-import { Card, CardBody, CardHeader, Text } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 
 interface SkillCardProps {
   icon: ReactNode;
@@ -9,20 +9,20 @@ interface SkillCardProps {
 
 export const SkillCard = ({ icon, label, color }: SkillCardProps) => {
   return (
-    <Card
-      direction="row"
-      align="center"
-      width="fit-content"
-      rounded="none"
-      borderTop="2px"
-      borderColor={color}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="flex items-center w-fit border bg-card shadow-sm overflow-hidden"
+      style={{ borderTopColor: color, borderTopWidth: '2px' }}
     >
-      <CardHeader p={3} color={color}>
+      <div className="p-3 text-xl" style={{ color }}>
         {icon}
-      </CardHeader>
-      <CardBody p={3} color={color}>
-        <Text>{label}</Text>
-      </CardBody>
-    </Card>
+      </div>
+      <div className="p-3 font-medium" style={{ color }}>
+        {label}
+      </div>
+    </motion.div>
   );
 };

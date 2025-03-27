@@ -1,5 +1,5 @@
-import { Box, Image, Text, VStack } from '@chakra-ui/react';
 import { Work } from '../../types/Work';
+import { motion } from 'framer-motion';
 
 interface WorkCardProps {
   work: Work;
@@ -8,29 +8,27 @@ interface WorkCardProps {
 
 const WorkCard = ({ work, onClick }: WorkCardProps) => {
   return (
-    <Box
-      cursor="pointer"
+    <motion.div
+      className="cursor-pointer overflow-hidden group"
       onClick={onClick}
-      transition="all 0.2s"
-      _hover={{ transform: 'translateY(-4px)' }}
+      whileHover={{ y: -8 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
-      <Image
-        src={work.thumbnail}
-        alt={work.title}
-        borderRadius="lg"
-        objectFit="cover"
-        w="100%"
-        h="240px"
-      />
-      <VStack align="start" mt={3} spacing={1}>
-        <Text fontWeight="bold" fontSize="lg">
+      <div className="overflow-hidden rounded-lg">
+        <motion.img
+          src={work.thumbnail}
+          alt={work.title}
+          className="w-full h-[240px] object-cover transition-transform duration-500 ease-in-out"
+          whileHover={{ scale: 1.1 }}
+        />
+      </div>
+      <div className="mt-3 space-y-1">
+        <h3 className="font-bold text-lg group-hover:text-primary transition-colors">
           {work.title}
-        </Text>
-        <Text color="gray.600" noOfLines={2}>
-          {work.description}
-        </Text>
-      </VStack>
-    </Box>
+        </h3>
+        <p className="text-muted-foreground line-clamp-2">{work.description}</p>
+      </div>
+    </motion.div>
   );
 };
 

@@ -1,77 +1,61 @@
-import { Box, Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { TbArrowBigDownLineFilled } from 'react-icons/tb';
 import { Link } from 'react-scroll';
 import { Frame } from './Frame';
 import { Stacks } from './Stacks';
+import { Button } from './ui/button';
+import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
-    <Flex flexDir={{ base: 'column', lg: 'row' }} my="2rem" id="hero">
-      <Box w={{ base: '100%', lg: '50%' }}>
+    <div className="flex flex-col lg:flex-row my-8 gap-8" id="hero">
+      <motion.div
+        className="w-full lg:w-1/2"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <Frame />
-        <Heading size={{ base: '2xl', md: '3xl', xl: '4xl' }} lineHeight="6rem">
-          Hi! I Am Shadrack Ankomahene
-        </Heading>
+        <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
+          Hi! I Am <span className="text-primary">Shadrack Ankomahene</span>
+        </h1>
 
-        <Text fontSize={{ base: 'md', lg: 'xl' }} my="2rem">
+        <p className="text-md md:text-lg lg:text-xl my-8 text-muted-foreground">
           I enjoy creating robust and scalable frontend solutions that provide
           excellent user experiences.
-        </Text>
-        <Flex gap={4} flexDir={{ base: 'column', lg: 'row' }}>
+        </p>
+        <div className="flex flex-col lg:flex-row gap-4">
           <Link to="resume" smooth={true} duration={1000}>
-            <Button
-              bgColor="brand.500"
-              color="white"
-              rounded="sm"
-              minW="200px"
-              h="50px"
-              _hover={{ bgColor: 'brand.600' }}
-            >
-              <Text as="span" mx="2">
-                Resume
-              </Text>{' '}
-              <TbArrowBigDownLineFilled />
+            <Button variant="gradient" className="min-w-[200px] h-[50px]">
+              <span className="mx-2">Resume</span>
+              <TbArrowBigDownLineFilled className="ml-2" />
             </Button>
           </Link>
 
           <Link to="about" smooth={true} duration={1000}>
             <Button
-              color="brand.500"
-              bgColor="white"
               variant="outline"
-              borderColor="brand.blue"
-              rounded="sm"
-              minW="200px"
-              h="50px"
+              className="min-w-[200px] h-[50px] border-primary"
             >
               More About me
             </Button>
           </Link>
-        </Flex>
-      </Box>
-      <Flex
-        gap={6}
-        justify="center"
-        align="center"
-        placeContent="center"
-        w={{ base: '100%', lg: '50%' }}
-        pos="relative"
-        my={{ base: '4rem', lg: 'none' }}
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="flex gap-6 justify-center items-center w-full lg:w-1/2 relative my-16 lg:my-0"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <Image
-          transform="scaleX(-1)"
-          src="illustration1.svg"
-          alt=""
-          boxSize={{
-            base: '200px',
-            lg: '350px',
-            xl: '450px',
-            '2xl': '550px',
-          }}
+        <img
+          className="transform scale-x-[-1] w-[200px] lg:w-[350px] xl:w-[450px] 2xl:w-[550px]"
+          src="/illustration1.svg"
+          alt="Developer illustration"
         />
 
         <Stacks />
-      </Flex>
-    </Flex>
+      </motion.div>
+    </div>
   );
 };

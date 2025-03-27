@@ -1,12 +1,11 @@
-import { Card, Flex } from '@chakra-ui/react';
 import { SocialHandles } from './SocialHandles';
 
 export const Header = () => {
   return (
-    <Flex justify="flex-end" align="center" id="header">
-      <Card py="0.5rem" px="1rem" rounded="full">
+    <div className="flex justify-end items-center py-4" id="header">
+      <div className="bg-card rounded-full py-2 px-4 shadow-sm">
         <SocialHandles />
-      </Card>
-    </Flex>
+      </div>
+    </div>
   );
 };
