@@ -73,7 +73,7 @@ export const Form = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 15 }}
         viewport={{ once: true }}
-        className="-mt-24"
+        className="-mt-20"
       >
         <Card className="w-full lg:w-4/5 mx-auto p-8 shadow-lg">
           {sent ? (

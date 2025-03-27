@@ -31,7 +31,7 @@ export const ResumeViewer = () => {
       </div>
 
       <motion.div
-        className="w-full lg:w-4/5 mx-auto mb-8 -mt-[100px] bg-card rounded-lg shadow-xl h-[700px] overflow-hidden"
+        className="w-full lg:w-4/5 mx-auto mb-8 -mt-[80px] bg-card rounded-lg shadow-xl h-[700px] overflow-hidden"
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 15 }}

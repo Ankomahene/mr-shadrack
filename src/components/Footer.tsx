@@ -13,7 +13,7 @@ export const Footer = () => {
           <img
             src="/mr-shadrack-dark.png"
             alt="Logo"
-            className="h-[70px] w-auto dark:invert"
+            className="h-[70px] w-auto"
           />
         </motion.div>
 
