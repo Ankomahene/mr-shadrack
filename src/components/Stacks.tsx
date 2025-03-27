@@ -15,11 +15,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/react.svg"
-          alt="React"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/react.svg" alt="React" className="w-full h-full" />
       </motion.button>
 
       <motion.button
@@ -27,11 +23,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/angular.svg"
-          alt="Angular"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/angular.svg" alt="Angular" className="w-full h-full" />
       </motion.button>
 
       <motion.button
@@ -39,11 +31,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/typescript.svg"
-          alt="TypeScript"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/typescript.svg" alt="TypeScript" className="w-full h-full" />
       </motion.button>
 
       <motion.button
@@ -51,11 +39,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/html5.svg"
-          alt="HTML5"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/html5.svg" alt="HTML5" className="w-full h-fullt" />
       </motion.button>
 
       <motion.button
@@ -63,7 +47,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img src="/css3.svg" alt="CSS3" className="w-full h-full dark:invert" />
+        <img src="/css3.svg" alt="CSS3" className="w-full h-full" />
       </motion.button>
 
       <motion.button
@@ -71,11 +55,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/javascript.svg"
-          alt="JavaScript"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/javascript.svg" alt="JavaScript" className="w-full h-full" />
       </motion.button>
 
       <motion.button
@@ -95,11 +75,7 @@ export const Stacks = () => {
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
       >
-        <img
-          src="/tailwind.svg"
-          alt="Tailwind CSS"
-          className="w-full h-full dark:invert"
-        />
+        <img src="/tailwind.svg" alt="Tailwind CSS" className="w-full h-full" />
       </motion.button>
     </motion.div>
   );
