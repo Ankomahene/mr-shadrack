@@ -1,5 +1,12 @@
 import { ReactNode } from 'react';
-import { FaAngular, FaCss3, FaHtml5, FaSass, FaReact } from 'react-icons/fa';
+import {
+  FaAngular,
+  FaCss3,
+  FaHtml5,
+  FaSass,
+  FaReact,
+  FaFigma,
+} from 'react-icons/fa';
 import {
   SiTypescript,
   SiJavascript,
@@ -8,7 +15,9 @@ import {
   SiBootstrap,
   SiTailwindcss,
   SiMui,
+  SiAdobephotoshop,
 } from 'react-icons/si';
+import { AngularMaterialIcon } from './icons';
 
 export interface ISkill {
   icon: ReactNode;
@@ -40,6 +49,11 @@ export const mainSkills: ISkill[] = [
     color: '#f7b500',
   },
   {
+    icon: <FaAngular />,
+    label: 'Angular',
+    color: '#da4353',
+  },
+  {
     icon: <FaReact />,
     label: 'React',
     color: '#32c1ee',
@@ -58,11 +72,6 @@ export const mainSkills: ISkill[] = [
 
 export const otherSkills: ISkill[] = [
   {
-    icon: <FaAngular />,
-    label: 'Angular',
-    color: '#da4353',
-  },
-  {
     icon: <SiRedux />,
     label: 'Redux',
     color: '#7248b6',
@@ -71,6 +80,11 @@ export const otherSkills: ISkill[] = [
     icon: <SiMui />,
     label: 'Material UI',
     color: '#007bf7',
+  },
+  {
+    icon: <AngularMaterialIcon className="h-6 w-6" color="#004491" />,
+    label: 'Angular Material',
+    color: '#004491',
   },
   {
     icon: <SiBootstrap />,
@@ -86,6 +100,16 @@ export const otherSkills: ISkill[] = [
     icon: <FaSass />,
     label: 'Sass/Scss',
     color: '#c76494',
+  },
+  {
+    icon: <FaFigma />,
+    label: 'Figma',
+    color: '#f24e1e',
+  },
+  {
+    icon: <SiAdobephotoshop />,
+    label: 'Photoshop',
+    color: '#094faf',
   },
 ];
 
@@ -106,10 +130,26 @@ export const projects: IProject[] = [
   },
   {
     imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1747048449/mr-shadrack/bbiqzmo0dsfedprrspac.jpg',
+    name: 'FMT Software Solutions',
+    description: 'Innovative Software Solutions',
+    link: 'https://fmtsoftware.com/',
+  },
+  {
+    imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710283/mr-shadrack/o3pxswj5t1ioo1dcaiqh.jpg',
     name: 'Dronehub',
     description: 'Everything about drones',
     link: 'https://dronehubgh.com/',
+  },
+
+  {
+    imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1747048457/mr-shadrack/dk0jgc3jusvpfbqkjvwb.jpg',
+    name: 'iSMART NGO Website',
+    description:
+      'Non-profit Organization aimed to transforming lives through Research & Education',
+    link: 'https://theismart.org/',
   },
   {
     imageUrl:
@@ -161,21 +201,21 @@ export const projects: IProject[] = [
     link: 'https://ms-image-share.netlify.app/',
   },
 
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710250/mr-shadrack/cvrhuhzdjmv5mdyy5ihg.jpg',
-    name: 'HTML CSS Buttons',
-    description: 'Free HTML CSS beautiful buttons to use',
-    link: 'https://uidynamik.netlify.app/showcase/buttons',
-  },
+  // {
+  //   imageUrl:
+  //     'https://res.cloudinary.com/mister-shadrack/image/upload/v1685710250/mr-shadrack/cvrhuhzdjmv5mdyy5ihg.jpg',
+  //   name: 'HTML CSS Buttons',
+  //   description: 'Free HTML CSS beautiful buttons to use',
+  //   link: 'https://uidynamik.netlify.app/showcase/buttons',
+  // },
 
-  {
-    imageUrl:
-      'https://res.cloudinary.com/mister-shadrack/image/upload/v1685711395/mr-shadrack/m52kxcpskvsdwjj0phxh.png',
-    name: 'MS React Progress Bar',
-    description: 'Open Source React Package',
-    link: 'https://ankomahene.github.io/ms_react-progress-bar/',
-  },
+  // {
+  //   imageUrl:
+  //     'https://res.cloudinary.com/mister-shadrack/image/upload/v1685711395/mr-shadrack/m52kxcpskvsdwjj0phxh.png',
+  //   name: 'MS React Progress Bar',
+  //   description: 'Open Source React Package',
+  //   link: 'https://ankomahene.github.io/ms_react-progress-bar/',
+  // },
   {
     imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1685712543/mr-shadrack/eq6y5fteadpczbhofkhe.jpg',

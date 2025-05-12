@@ -1,0 +1,18 @@
+export const AngularMaterialIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    x="0px"
+    y="0px"
+    width="960px"
+    height="960px"
+    viewBox="0 0 960 960"
+    enableBackground="new 0 0 960 960"
+    xmlSpace="preserve"
+    fill={props.color || 'currentColor'}
+    {...props}
+  >
+    <polygon points="562.6,109.8 804.1,629.5 829.2,233.1"></polygon>
+    <polygon points="624.9,655.9 334.3,655.9 297.2,745.8 479.6,849.8 662,745.8"></polygon>
+    <polygon points="384.1,539.3 575.2,539.3 479.6,307"></polygon>
+    <polygon points="396.6,109.8 130,233.1 155.1,629.5"></polygon>
+  </svg>
+);
