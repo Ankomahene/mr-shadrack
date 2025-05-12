@@ -8,6 +8,7 @@ interface ProjectCardProps {
   name: string;
   description: string;
   link: string;
+  stacks?: string[];
 }
 
 export const ProjectCard = ({
@@ -15,6 +16,7 @@ export const ProjectCard = ({
   name,
   description,
   link,
+  stacks,
 }: ProjectCardProps) => {
   return (
     <motion.div
@@ -29,6 +31,19 @@ export const ProjectCard = ({
         <CardContent className="pt-6">
           <h3 className="text-lg font-semibold">{name}</h3>
           <p className="text-sm text-muted-foreground mt-2">{description}</p>
+
+          {stacks && stacks.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {stacks?.map((stack, index) => (
+                <span
+                  key={index}
+                  className="text-xs font-medium text-muted-foreground bg-muted/20 rounded-full px-2 py-1"
+                >
+                  {stack}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="flex justify-start mt-4">
             <a

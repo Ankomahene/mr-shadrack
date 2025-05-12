@@ -30,6 +30,7 @@ export interface IProject {
   name: string;
   description: string;
   link: string;
+  stacks?: string[];
 }
 
 export const mainSkills: ISkill[] = [
@@ -116,10 +117,37 @@ export const otherSkills: ISkill[] = [
 export const projects: IProject[] = [
   {
     imageUrl:
+      'https://res.cloudinary.com/mister-shadrack/image/upload/v1747082247/mr-shadrack/ysarqlyjok8zumliifay.jpg',
+    name: 'TradeSim',
+    description: 'Crypto Trading App',
+    link: 'https://ms-tradesim.netlify.app/',
+    stacks: [
+      'Angular',
+      'TypeScript',
+      'Tailwind CSS',
+      'RxJS',
+      'NgRx',
+      'Chat.js',
+      'Appwrite',
+    ],
+  },
+  {
+    imageUrl:
       'https://res.cloudinary.com/mister-shadrack/image/upload/v1722523645/mr-shadrack/sumgqbomjugj7zrydxsy.jpg',
     name: 'FMT Design and Print',
     description: 'Designing and Printing Online store',
     link: 'https://fmtdesignprint.com/',
+    stacks: [
+      'React.js',
+      'Next.js',
+      'TypeScript',
+      'Mantine UI',
+      'Supabase',
+      'Sanity CMS',
+      'React Query',
+      'Rechart',
+      'Paystack',
+    ],
   },
   {
     imageUrl:
@@ -127,6 +155,7 @@ export const projects: IProject[] = [
     name: 'CaseCanvas',
     description: 'Transform Your Phone into a Masterpiece',
     link: 'https://case-canvas-one.vercel.app/',
+    stacks: ['React.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
   {
     imageUrl:
@@ -134,6 +163,17 @@ export const projects: IProject[] = [
     name: 'FMT Software Solutions',
     description: 'Innovative Software Solutions',
     link: 'https://fmtsoftware.com/',
+    stacks: [
+      'React.js',
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Shadcn UI',
+      'Supabase',
+      'Paystack',
+      'React Query',
+      '',
+    ],
   },
   {
     imageUrl:
@@ -141,6 +181,15 @@ export const projects: IProject[] = [
     name: 'Dronehub',
     description: 'Everything about drones',
     link: 'https://dronehubgh.com/',
+    stacks: [
+      'Next.js',
+      'TypeScript',
+      'SCSS/SASS',
+      'Chakra UI',
+      'Sanity CMS',
+      'Redux',
+      'Redux Toolkit',
+    ],
   },
 
   {
@@ -150,6 +199,16 @@ export const projects: IProject[] = [
     description:
       'Non-profit Organization aimed to transforming lives through Research & Education',
     link: 'https://theismart.org/',
+    stacks: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Shadcn UI',
+      'Supabase',
+      'Paystack',
+      'React Query',
+      'Framer Motion',
+    ],
   },
   {
     imageUrl:
@@ -157,6 +216,7 @@ export const projects: IProject[] = [
     name: 'CSS Glassmorphism Generator',
     description: 'Generate CSS glass effect for Elements',
     link: 'https://uidynamik.netlify.app/glassmorphism',
+    stacks: ['React.js', 'TypeScript', 'CSS'],
   },
   {
     imageUrl:
@@ -164,6 +224,7 @@ export const projects: IProject[] = [
     name: 'Box Shadow Generator',
     description: 'Generate Cool CSS Box Shadows easily',
     link: 'https://css-box-shadow-gen.netlify.app/',
+    stacks: ['React.js', 'TypeScript', 'CSS'],
   },
   {
     imageUrl:
@@ -171,6 +232,7 @@ export const projects: IProject[] = [
     name: 'Playground',
     description: 'Practice HTML and CSS',
     link: 'https://ms-html-css-playground.netlify.app/',
+    stacks: ['React.js', 'TypeScript', 'CSS'],
   },
   {
     imageUrl:
@@ -178,6 +240,7 @@ export const projects: IProject[] = [
     name: 'Pepe Dame',
     description: 'Two player/Team Board Game',
     link: 'https://pepe-dame.netlify.app/',
+    stacks: ['React.js', 'CSS', 'React  DnD'],
   },
   {
     imageUrl:
@@ -185,6 +248,7 @@ export const projects: IProject[] = [
     name: 'Hands for Seniors',
     description: 'Non-profit Organization aimed to support at risk',
     link: 'https://hands-for-seniors.netlify.app/',
+    stacks: ['React.js', 'TypeScript', 'CSS', 'Mantine UI'],
   },
   {
     imageUrl:
@@ -192,6 +256,7 @@ export const projects: IProject[] = [
     name: 'MS Buy',
     description: 'E-Commerce Website',
     link: 'http://ms-buy.netlify.app/',
+    stacks: ['Next.js', 'TypeScript', 'Chakra UI'],
   },
   {
     imageUrl:
@@ -199,6 +264,7 @@ export const projects: IProject[] = [
     name: 'MS Image Share',
     description: 'Upload and Share Images',
     link: 'https://ms-image-share.netlify.app/',
+    stacks: ['React.js', 'TypeScript', 'CSS', 'Cloudinary'],
   },
 
   // {
@@ -222,5 +288,12 @@ export const projects: IProject[] = [
     name: 'Mr Shadrack',
     description: 'My personal portfolio',
     link: 'https://mr-shadrack.netlify.app/',
+    stacks: [
+      'React.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Shadcn UI',
+      'Framer Motion',
+    ],
   },
 ];

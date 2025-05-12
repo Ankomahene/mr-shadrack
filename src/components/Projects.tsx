@@ -29,7 +29,7 @@ export const Projects = () => {
 
       <Card className="w-full lg:w-4/5 mx-auto p-8 -mt-[80px] shadow-lg">
         <div className="flex flex-wrap justify-center gap-6">
-          {projects.map(({ name, link, imageUrl, description }, i) => (
+          {projects.map(({ name, link, imageUrl, description, stacks }, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -42,6 +42,7 @@ export const Projects = () => {
                 imageUrl={imageUrl}
                 link={link}
                 description={description}
+                stacks={stacks}
               />
             </motion.div>
           ))}
