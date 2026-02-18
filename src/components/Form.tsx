@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export const Form = () => {
   const [name, setName] = useState('');
@@ -18,17 +19,26 @@ export const Form = () => {
       setIsSending(true);
       setError(null);
       try {
-        const response = await fetch('/.netlify/functions/send-email', {
-          method: 'POST',
-          body: JSON.stringify({
-            name,
-            email,
-            message,
-          }),
-        });
+        // Save to Supabase
+        const { error: dbError } = await supabase.from('messages').insert([
+          { name, email, message }
+        ]);
 
-        if (!response.ok) {
-          throw new Error('Failed to send message');
+        if (dbError) throw dbError;
+
+        // Optional: Call existing Netlify function if needed, or remove if Supabase is enough.
+        // Keeping it for now as a backup/notification mechanism if configured.
+        try {
+          await fetch('/.netlify/functions/send-email', {
+            method: 'POST',
+            body: JSON.stringify({
+              name,
+              email,
+              message,
+            }),
+          });
+        } catch (e) {
+          console.warn('Email notification failed, but message saved to DB', e);
         }
 
         setSent(true);
@@ -36,6 +46,7 @@ export const Form = () => {
         setEmail('');
         setMessage('');
       } catch (error) {
+        console.error(error);
         setError('Failed to send message. Please try again.');
       } finally {
         setIsSending(false);

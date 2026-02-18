@@ -15,7 +15,7 @@ export const Experience = () => {
 
   return (
     <div
-      className="flex flex-col lg:flex-row my-24 bg-secondary dark:bg-secondary/50 rounded-lg overflow-hidden shadow-lg"
+      className="flex flex-col lg:flex-row my-24 bg-card rounded-lg overflow-hidden shadow-lg"
       id="experience"
     >
       <motion.div
@@ -23,8 +23,8 @@ export const Experience = () => {
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="flex flex-col justify-center items-center bg-gradient-to-br from-primary-800 to-primary-600 
-                   w-full lg:w-auto lg:min-w-[250px] py-12 lg:py-0 px-12 text-white"
+        className="flex flex-col justify-center items-center bg-linear-to-br from-primary to-primary/70
+                   w-full lg:w-auto lg:min-w-62.5 py-12 lg:py-0 px-12 text-white"
       >
         <div className="text-center">
           <h2 className="text-6xl font-bold">

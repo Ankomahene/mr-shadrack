@@ -34,6 +34,12 @@ export const Navigation = () => {
           >
             UI/UX Designs
           </RouterLink> */}
+          <RouterLink
+            to="/year-in-review"
+            className="text-lg font-bold hover:text-primary transition-colors"
+          >
+            Year in Review
+          </RouterLink>
           <SocialHandles />
           <ThemeToggle />
         </motion.div>

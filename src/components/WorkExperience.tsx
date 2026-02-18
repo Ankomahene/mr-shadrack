@@ -100,7 +100,7 @@ export const WorkExperience = () => {
                   <h3 className="text-xl font-bold text-foreground">{job.role}</h3>
                   <h4 className="text-lg font-semibold text-primary">{job.company}</h4>
                 </div>
-                <div className="flex items-center text-muted-foreground text-sm font-medium bg-secondary/50 px-3 py-1 rounded-full w-fit">
+                <div className="flex items-center text-sm font-medium bg-gray-200 dark:bg-gray-900 text-foreground px-3 py-1 rounded-full w-fit">
                   <FaCalendarAlt className="mr-2" />
                   {job.period}
                 </div>
@@ -116,7 +116,7 @@ export const WorkExperience = () => {
 
               <div className="flex flex-wrap gap-2">
                 {job.skills.map((skill, i) => (
-                  <Badge key={i} variant="secondary" className="text-xs">
+                  <Badge key={i} variant="secondary" className="text-xs bg-gray-200 dark:bg-gray-900 text-foreground">
                     {skill}
                   </Badge>
                 ))}
