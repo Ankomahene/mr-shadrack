@@ -1,7 +1,6 @@
 import { mainSkills, otherSkills } from '../consts';
 import { SkillCard } from './SkillCard';
 import { motion } from 'framer-motion';
-import { Button } from './ui/button';
 
 export const About = () => {
   const container = {
@@ -15,41 +14,41 @@ export const About = () => {
   };
 
   return (
-    <section className="py-12">
+    <section className="py-12 border-t border-border/40">
       <h2
         id="about"
-        className="text-2xl md:text-3xl font-bold my-8 text-primary"
+        className="text-3xl md:text-4xl font-bold my-12 text-center"
       >
-        More About me
+        About Me
       </h2>
 
-      <div className="flex flex-col lg:flex-row gap-6 my-8" id="summary">
-        <div className="w-full lg:w-1/5 text-xl font-semibold text-primary/80">
-          Summary
+      <div className="flex flex-col lg:flex-row gap-12 my-8" id="summary">
+        <div className="w-full lg:w-1/4">
+          <h3 className="text-xl font-semibold text-primary mb-4">Summary</h3>
+          <div className="h-1 w-12 bg-primary rounded-full"></div>
         </div>
-        <div className="w-full lg:w-4/5 p-4 md:p-8 border-l border-primary/20 text-lg">
-          <p className="text-muted-foreground">
-            Experienced and dedicated software engineer specializing in frontend
-            development, with five years of professional experience. Proficient
-            in HTML, CSS, JavaScript, React.js, Next.js, Angular, and
-            TypeScript.
+        <div className="w-full lg:w-3/4 text-lg leading-relaxed text-muted-foreground">
+          <p className="mb-6">
+            Experienced Software Engineer with over six years of professional experience specializing in full-stack development using Node.js and React.js. 
+            I hold a bachelor's degree in Computer Science Education from the University of Cape Coast, Ghana.
           </p>
-          <p className="text-muted-foreground mt-4">
-            Passionate about problem-solving and driven by excellence, I bring a
-            wealth of expertise and a strong focus on UI/UX to any software
-            development team.
+          <p className="mb-6">
+            I have a strong foundation in JavaScript and TypeScript, building scalable, production-ready applications across web platforms. 
+            My expertise combines clean architecture with modern UI/UX best practices.
+          </p>
+          <p>
+            Beyond employment, I am an entrepreneur building SaaS products and AI-powered applications. 
+            I am passionate about problem-solving, performance optimization, and delivering user-focused solutions.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 my-8" id="skills">
-        <div className="w-full lg:w-1/5 text-xl font-semibold pt-8 text-primary/80">
-          Skills
+      <div className="flex flex-col lg:flex-row gap-12 my-12" id="skills">
+        <div className="w-full lg:w-1/4">
+           <h3 className="text-xl font-semibold text-primary mb-4">Core Stack</h3>
+           <div className="h-1 w-12 bg-primary rounded-full"></div>
         </div>
-        <div className="w-full lg:w-4/5 p-4 md:p-8 border-l border-primary/20">
-          <h3 className="text-xl font-semibold my-4 pb-4 border-b">
-            Super Powers
-          </h3>
+        <div className="w-full lg:w-3/4">
           <motion.div
             className="flex flex-wrap gap-4"
             variants={container}
@@ -66,10 +65,15 @@ export const About = () => {
               />
             ))}
           </motion.div>
-
-          <h3 className="text-xl font-semibold my-4 pb-4 border-b mt-8">
-            Other Powers
-          </h3>
+        </div>
+      </div>
+      
+      <div className="flex flex-col lg:flex-row gap-12 my-12">
+        <div className="w-full lg:w-1/4">
+           <h3 className="text-xl font-semibold text-primary mb-4">Tools & Ecosystem</h3>
+           <div className="h-1 w-12 bg-primary rounded-full"></div>
+        </div>
+        <div className="w-full lg:w-3/4">
           <motion.div
             className="flex flex-wrap gap-4"
             variants={container}
@@ -86,16 +90,6 @@ export const About = () => {
               />
             ))}
           </motion.div>
-
-          <p className="my-8 text-lg">
-            These are not the only powers I have. Check out{' '}
-            <a href="/resume-02-25.pdf" download="shadrack-resume.pdf">
-              <Button variant="link" className="text-primary mx-1 px-1">
-                my resume
-              </Button>
-            </a>
-            to see more
-          </p>
         </div>
       </div>
     </section>

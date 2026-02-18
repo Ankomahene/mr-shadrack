@@ -1,6 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ThemeToggle } from './theme-toggle';
+import { SocialHandles } from './SocialHandles';
 
 export const Navigation = () => {
   return (
@@ -27,12 +28,13 @@ export const Navigation = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex items-center gap-4"
         >
-          <RouterLink
+          {/* <RouterLink
             to="/ui-designs"
             className="text-lg font-bold hover:text-primary transition-colors"
           >
             UI/UX Designs
-          </RouterLink>
+          </RouterLink> */}
+          <SocialHandles />
           <ThemeToggle />
         </motion.div>
       </div>

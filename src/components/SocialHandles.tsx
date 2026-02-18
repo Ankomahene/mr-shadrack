@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 interface SocialButtonProps {
@@ -40,17 +40,17 @@ const SocialButton = ({
 
 export const SocialHandles = () => {
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-2 border rounded-full px-4 py-2 shadow-sm">
       <SocialButton label="Github" href="https://github.com/Ankomahene">
         <FaGithub className="h-4 w-4" />
       </SocialButton>
-      <SocialButton
+      {/* <SocialButton
         label="Twitter"
         href="https://twitter.com/mister_shadrack"
         delay={0.1}
       >
         <FaTwitter className="h-4 w-4" />
-      </SocialButton>
+      </SocialButton> */}
       <SocialButton
         label="LinkedIn"
         href="https://www.linkedin.com/in/shadrack-ankomahene-5a393311a/"

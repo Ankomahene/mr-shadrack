@@ -46,40 +46,38 @@ export const Form = () => {
   };
 
   return (
-    <section id="contact" className="mb-12">
-      <div className="bg-gradient-to-r from-primary-600 to-primary-400 p-8 text-white text-center h-[250px] flex flex-col justify-center items-center">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          Send a Message
-        </motion.h2>
-        <motion.p
-          className="py-4 text-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          Got a Question or Want to Reach out?
-        </motion.p>
-      </div>
+    <section id="contact" className="w-full lg:w-4/5 mx-auto p-8 mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        className="mb-12 text-center"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+          Get in Touch
+        </h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Have a question or want to work together? Feel free to reach out.
+        </p>
+      </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 100 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         viewport={{ once: true }}
-        className="-mt-20"
       >
-        <Card className="w-full lg:w-4/5 mx-auto p-8 shadow-lg">
+        <Card className="w-full max-w-2xl mx-auto p-8 shadow-sm border-border/50">
           {sent ? (
             <SentAlertMain />
           ) : (
-            <div className="w-full max-w-lg mx-auto">
+            <div className="w-full">
+              {error && (
+                <div className="bg-destructive/10 text-destructive p-3 rounded-md mb-6 text-sm">
+                  {error}
+                </div>
+              )}
               <div className="mb-6">
                 <label
                   htmlFor="name"
@@ -95,7 +93,7 @@ export const Form = () => {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Jane Doe"
                   required
-                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 />
               </div>
 
@@ -112,9 +110,9 @@ export const Form = () => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="username@example.com"
+                  placeholder="name@example.com"
                   required
-                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 />
               </div>
 
@@ -130,37 +128,27 @@ export const Form = () => {
                   name="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Type your message here"
+                  placeholder="Tell me about your project..."
                   required
-                  rows={6}
-                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                  rows={5}
+                  className="w-full p-3 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
                 />
               </div>
 
-              {error && (
-                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-md text-sm">
-                  {error}
-                </div>
-              )}
-
-              <div className="mb-6">
-                <Button
-                  variant="gradient"
-                  className="w-full py-6"
-                  type="button"
-                  onClick={handleSendMessage}
-                  disabled={isSending}
-                >
-                  {isSending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    'Send Message'
-                  )}
-                </Button>
-              </div>
+              <Button
+                className="w-full h-12 text-lg font-medium"
+                onClick={handleSendMessage}
+                disabled={isSending}
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message'
+                )}
+              </Button>
             </div>
           )}
         </Card>

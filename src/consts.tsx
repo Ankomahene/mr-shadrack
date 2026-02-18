@@ -1,23 +1,27 @@
 import { ReactNode } from 'react';
 import {
   FaAngular,
+  FaAws,
   FaCss3,
-  FaHtml5,
-  FaSass,
-  FaReact,
   FaFigma,
+  FaHtml5,
+  FaNodeJs,
+  FaReact
 } from 'react-icons/fa';
 import {
-  SiTypescript,
-  SiJavascript,
-  SiNextdotjs,
-  SiRedux,
   SiBootstrap,
-  SiTailwindcss,
+  SiGraphql,
+  SiJavascript,
   SiMui,
-  SiAdobephotoshop,
+  SiNestjs,
+  SiNextdotjs,
+  SiPostgresql,
+  SiReactquery,
+  SiRedux,
+  SiSupabase,
+  SiTailwindcss,
+  SiTypescript
 } from 'react-icons/si';
-import { AngularMaterialIcon } from './icons';
 
 export interface ISkill {
   icon: ReactNode;
@@ -50,11 +54,6 @@ export const mainSkills: ISkill[] = [
     color: '#f7b500',
   },
   {
-    icon: <FaAngular />,
-    label: 'Angular',
-    color: '#da4353',
-  },
-  {
     icon: <FaReact />,
     label: 'React',
     color: '#32c1ee',
@@ -69,48 +68,73 @@ export const mainSkills: ISkill[] = [
     label: 'TypeScript',
     color: '#1565c0',
   },
+  {
+    icon: <FaAngular />,
+    label: 'Angular',
+    color: '#da4353',
+  },
+  {
+    icon: <FaNodeJs />,
+    label: 'Node.js',
+    color: '#417e38',
+  },
+  {
+    icon: <SiNestjs />,
+    label: 'Nest.js',
+    color: '#e0234e',
+  },
+  {
+    icon: <SiPostgresql />,
+    label: 'PostgreSQL',
+    color: '#336791',
+  },
 ];
 
 export const otherSkills: ISkill[] = [
   {
+    icon: <SiSupabase />,
+    label: 'Supabase',
+    color: '#3ecf8e',
+  },
+  {
+    icon: <FaAws />,
+    label: 'AWS',
+    color: '#ff9900',
+  },
+  {
+    icon: <SiGraphql />,
+    label: 'GraphQL',
+    color: '#e10098',
+  },
+  {
+    icon: <SiReactquery />,
+    label: 'React Query',
+    color: '#ff4154',
+  },
+  {
     icon: <SiRedux />,
     label: 'Redux',
-    color: '#7248b6',
+    color: '#764abc',
   },
   {
     icon: <SiMui />,
     label: 'Material UI',
-    color: '#007bf7',
-  },
-  {
-    icon: <AngularMaterialIcon className="h-6 w-6" color="#004491" />,
-    label: 'Angular Material',
-    color: '#004491',
-  },
-  {
-    icon: <SiBootstrap />,
-    label: 'Bootstrap',
-    color: '#3d0af5',
+    color: '#007fff',
   },
   {
     icon: <SiTailwindcss />,
     label: 'Tailwind CSS',
-    color: '#07b0ce',
+    color: '#06b6d4',
   },
   {
-    icon: <FaSass />,
-    label: 'Sass/Scss',
-    color: '#c76494',
+    icon: <SiBootstrap />,
+    label: 'Bootstrap',
+    color: '#7952b3',
   },
   {
     icon: <FaFigma />,
     label: 'Figma',
     color: '#f24e1e',
-  },
-  {
-    icon: <SiAdobephotoshop />,
-    label: 'Photoshop',
-    color: '#094faf',
   },
 ];
 

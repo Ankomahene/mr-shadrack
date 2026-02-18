@@ -1,60 +1,66 @@
-import { TbArrowBigDownLineFilled } from 'react-icons/tb';
-import { Link } from 'react-scroll';
-import { Frame } from './Frame';
-import { Stacks } from './Stacks';
-import { Button } from './ui/button';
 import { motion } from 'framer-motion';
+import { Link } from 'react-scroll';
+import { Button } from './ui/button';
 
 export const Hero = () => {
   return (
-    <div className="flex flex-col lg:flex-row my-8 gap-8" id="hero">
+    <div className="flex flex-col lg:flex-row my-16 lg:my-32 gap-12 items-center" id="hero">
       <motion.div
-        className="w-full lg:w-1/2"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        className="w-full lg:w-2/3"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        <Frame />
-        <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
-          Hi! I Am <span className="text-primary">Shadrack Ankomahene</span>
+        <div className="mb-6 inline-block rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground">
+          Available for new opportunities
+        </div>
+        <h1 className="text-4xl md:text-6xl xl:text-7xl font-bold leading-tight tracking-tight mb-6">
+          Shadrack Ankomahene
         </h1>
+        <h2 className="text-2xl md:text-3xl text-primary font-medium mb-6">
+          Senior Frontend Engineer
+        </h2>
 
-        <p className="text-md md:text-lg lg:text-xl my-8 text-muted-foreground">
-          I enjoy creating robust and scalable frontend solutions that provide
-          excellent user experiences.
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
+          I am a software engineer with specialty in Frontend, focused on building scalable, high-performance web applications with modern technologies like
+          React, Angular, Next.js, TypeScript and Node.js that deliver exceptional user experiences.
         </p>
-        <div className="flex flex-col lg:flex-row gap-4">
-          <Link to="resume" smooth={true} duration={1000}>
-            <Button variant="gradient" className="min-w-[200px] h-[50px]">
-              <span className="mx-2">Resume</span>
-              <TbArrowBigDownLineFilled className="ml-2" />
+
+        <div className="flex flex-wrap gap-4">
+          <Link to="projects" smooth={true} duration={1000}>
+            <Button size="lg" className="h-12 px-8 text-lg">
+              View Work
             </Button>
           </Link>
 
-          <Link to="about" smooth={true} duration={1000}>
+          <Link to="contact" smooth={true} duration={1000}>
             <Button
               variant="outline"
-              className="min-w-[200px] h-[50px] border-primary"
+              size="lg"
+              className="h-12 px-8 text-lg"
             >
-              More About me
+              Contact Me
             </Button>
           </Link>
         </div>
       </motion.div>
 
       <motion.div
-        className="flex gap-6 justify-center items-center w-full lg:w-1/2 relative my-16 lg:my-0"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
+        className="w-full lg:w-1/3 flex justify-center lg:justify-end"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <img
-          className="transform scale-x-[-1] w-[200px] lg:w-[350px] xl:w-[450px] 2xl:w-[550px]"
-          src="/illustration1.svg"
-          alt="Developer illustration"
-        />
-
-        <Stacks />
+        <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-3xl" />
+          <div className="relative h-full w-full rounded-2xl overflow-hidden border-2 border-primary/10 bg-card shadow-2xl">
+            <img
+              src="/shad-portrait.jpg"
+              alt="Shadrack Ankomahene"
+              className="w-full h-full object-cover object-top scale-95 rounded-2xl"
+            />
+          </div>
+        </div>
       </motion.div>
     </div>
   );

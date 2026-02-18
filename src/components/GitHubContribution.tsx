@@ -82,49 +82,44 @@ export const GitHubContribution = ({ username }: GitHubContributionProps) => {
   }
 
   return (
-    <Card className="py-6">
-      <h3 className="text-xl font-semibold mb-6 text-center px-4">
-        GitHub Contributions Graph
-      </h3>
-      <div className="p-4 bg-card rounded-lg shadow-sm overflow-x-auto">
-        {hasError ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <p>Unable to load GitHub contributions</p>
-            <p className="text-sm mt-2">
-              Please check your connection or the GitHub username.
-            </p>
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="min-w-[750px] md:min-w-0 w-full"
-          >
-            <GitHubCalendar
-              key={`github-calendar-${currentTheme}`}
-              username={username}
-              colorScheme={currentTheme}
-              labels={{
-                totalCount: '{{count}} contributions in the last 2 years',
-              }}
-              style={{
-                maxWidth: '100%',
-                margin: '0 auto',
-              }}
-            />
-          </motion.div>
-        )}
-        <div className="mt-4 text-xs text-muted-foreground text-right">
-          <a
-            href={`https://github.com/${username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            View full profile on GitHub &rarr;
+    <Card className="py-6 border shadow-none">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-wrap justify-center gap-4">
+          <a href="https://awesome-github-stats.azurewebsites.net/index.html??cardType=github&theme=dark&fontFamily=Inter&preferLogin=false">
+            <img alt="ankomahene's GitHub Stats" src={`https://awesome-github-stats.azurewebsites.net/user-stats/${username}?cardType=github&theme=${currentTheme === 'dark' ? 'dark' : 'default'}&fontFamily=Inter&preferLogin=false`} />
           </a>
+          <img src={`http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=${username}&theme=${currentTheme === 'dark' ? '2077' : 'default'}`} alt="Repos per language" />
+          <img src={`http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=${username}&theme=${currentTheme === 'dark' ? '2077' : 'default'}&utcOffset=8`} alt="Productive time" />
+        </div>
+
+        <div className="p-4 bg-card  overflow-x-auto">
+          <h3 className="text-xl font-semibold mb-6 text-center px-4">
+            Contribution Calendar
+          </h3>
+          {hasError ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>Unable to load GitHub contributions</p>
+              <p className="text-sm mt-2">
+                Please check your connection or the GitHub username.
+              </p>
+            </div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="flex justify-center min-w-[800px] md:min-w-full"
+            >
+              <GitHubCalendar
+                username={username}
+                colorScheme={currentTheme}
+                fontSize={12}
+                blockSize={12}
+                blockMargin={4}
+              />
+            </motion.div>
+          )}
         </div>
       </div>
     </Card>
