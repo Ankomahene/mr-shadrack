@@ -40,7 +40,7 @@ export const Projects = () => {
           Featured Projects
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          A selection of projects demonstrating my expertise in frontend development and UI/UX design.
+          A selection of some of the projects I have worked on.
         </p>
       </motion.div>
 

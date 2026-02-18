@@ -38,7 +38,7 @@ const jobs: Job[] = [
   {
     company: 'Morgan Stanley',
     role: 'Software Engineer',
-    period: '2021 – 2024',
+    period: 'Mar 2020 – Dec 2024',
     description: [
       'Built and maintained large-scale applications, dashboards, and internal tools for financial services.',
       'Worked on API platforms, usage monitoring dashboards, and self-service tools to improve developer speed.',
@@ -51,7 +51,7 @@ const jobs: Job[] = [
   {
     company: 'Turntabl Ghana Limited',
     role: 'Software Engineer',
-    period: 'Nov 2019 – 2021',
+    period: 'Oct 2019 – Dec 2024',
     description: [
       'Completed intensive training in full-stack software development and agile methodologies.',
       'Worked on internal projects and client placements, developing robust web applications.',
