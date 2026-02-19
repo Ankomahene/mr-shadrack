@@ -17,7 +17,7 @@ export const Navigation = () => {
             <img
               src="/mr-shadrack-dark.png"
               alt="Logo"
-              className="h-[70px] w-auto"
+              className="h-10 md:h-17.5 w-auto hidden md:block"
             />
           </RouterLink>
         </motion.div>
@@ -36,9 +36,9 @@ export const Navigation = () => {
           </RouterLink> */}
           <RouterLink
             to="/year-in-review"
-            className="text-lg font-bold hover:text-primary transition-colors"
+            className="md:text-lg font-bold hover:text-primary transition-colors mx-2"
           >
-            Year in Review
+            My Year in Review
           </RouterLink>
           <SocialHandles />
           <ThemeToggle />

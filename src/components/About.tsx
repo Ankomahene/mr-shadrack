@@ -29,15 +29,15 @@ export const About = () => {
         </div>
         <div className="w-full lg:w-3/4 text-lg leading-relaxed text-muted-foreground">
           <p className="mb-6">
-            Experienced Software Engineer with over six years of professional experience specializing in full-stack development using Node.js and React.js. 
+            Experienced Software Engineer with over six years of professional experience.
             I hold a bachelor's degree in Computer Science Education from the University of Cape Coast, Ghana.
           </p>
           <p className="mb-6">
-            I have a strong foundation in JavaScript and TypeScript, building scalable, production-ready applications across web platforms. 
-            My expertise combines clean architecture with modern UI/UX best practices.
+            I have a strong foundation in JavaScript and TypeScript, building scalable, production-ready applications across web platforms.
+            My expertise combines clean architecture with modern best practices.
           </p>
           <p>
-            Beyond employment, I am an entrepreneur building SaaS products and AI-powered applications. 
+            Beyond employment, I am an entrepreneur building SaaS products and AI-powered applications.
             I am passionate about problem-solving, performance optimization, and delivering user-focused solutions.
           </p>
         </div>
@@ -45,8 +45,8 @@ export const About = () => {
 
       <div className="flex flex-col lg:flex-row gap-12 my-12" id="skills">
         <div className="w-full lg:w-1/4">
-           <h3 className="text-xl font-semibold text-primary mb-4">Core Stack</h3>
-           <div className="h-1 w-12 bg-primary rounded-full"></div>
+          <h3 className="text-xl font-semibold text-primary mb-4">Core Stack</h3>
+          <div className="h-1 w-12 bg-primary rounded-full"></div>
         </div>
         <div className="w-full lg:w-3/4">
           <motion.div
@@ -67,11 +67,11 @@ export const About = () => {
           </motion.div>
         </div>
       </div>
-      
+
       <div className="flex flex-col lg:flex-row gap-12 my-12">
         <div className="w-full lg:w-1/4">
-           <h3 className="text-xl font-semibold text-primary mb-4">Tools & Ecosystem</h3>
-           <div className="h-1 w-12 bg-primary rounded-full"></div>
+          <h3 className="text-xl font-semibold text-primary mb-4">Tools & Ecosystem</h3>
+          <div className="h-1 w-12 bg-primary rounded-full"></div>
         </div>
         <div className="w-full lg:w-3/4">
           <motion.div

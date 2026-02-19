@@ -29,9 +29,21 @@ const jobs: Job[] = [
     period: 'Nov 2025 – Present',
     description: [
       'Lead development of Kreeo Sync, a Figma plugin built with React for documenting and generating AI-powered designer portfolios.',
-      'Manage full system architecture including Figma Plugin (React + TypeScript), Web Dashboard (Next.js), and Backend (Nest.js + PostgreSQL via Supabase).',
+      'Manage full system architecture including Figma Plugin (React + TypeScript), Web Dashboard (React), and Backend (Nest.js + PostgreSQL via Supabase).',
       'Implemented secure authentication using Figma OAuth and project syncing systems.',
       'Developed AI-powered case study generation and integrated speech-to-text functionality using OpenAI APIs.',
+    ],
+    skills: ['React', 'TypeScript', 'Next.js', 'Nest.js', 'PostgreSQL', 'Supabase', 'OpenAI', 'Figma'],
+  },
+  {
+    company: 'Faithtower Media Technologies',
+    role: 'Founder & Software Engineer',
+    period: 'Jan 2025 – Present',
+    description: [
+      'Designed and launched multiple SaaS products, including Sales Management, Smart Church Management, and Inventory Management systems, currently used by businesses and organizations.',
+      'Built scalable multi-tenant web applications using React, Next.js, TypeScript, and modern frontend architecture, handling authentication, subscriptions, and role-based access.',
+      'Led full product lifecycle: product strategy, system design, development, deployment, client onboarding, and ongoing support.',
+      'Delivered custom web platforms for NGOs, hotels, and companies, helping organizations digitize operations and improve workflow efficiency.',
     ],
     skills: ['React', 'TypeScript', 'Next.js', 'Nest.js', 'PostgreSQL', 'Supabase', 'OpenAI', 'Figma'],
   },
@@ -40,11 +52,12 @@ const jobs: Job[] = [
     role: 'Software Engineer',
     period: 'Mar 2020 – Dec 2024',
     description: [
-      'Built and maintained large-scale applications, dashboards, and internal tools for financial services.',
-      'Worked on API platforms, usage monitoring dashboards, and self-service tools to improve developer speed.',
-      'Focused on performance, testing (high coverage), and clean code in a structured engineering environment.',
-      'Collaborated closely with cloud services such as Microsoft Azure and AWS.',
-      'Actively contributed to inner-source libraries written in Angular and TypeScript, improving code quality, fixing bugs, and enhancing functionality.',
+      'Built and maintained internal API platforms and developer tools using React, Angular, TypeScript, and Microsoft Azure, supporting enterprise-level developer systems.',
+      'Developed a self-service API deployment tool with OpenAPI validation, semantic versioning, and policy management, reducing API deployment time by 40% and improving developer efficiency.',
+      'Improved frontend performance by reducing unnecessary HTTP requests and implementing caching strategies, leading to faster load times and better user experience.',
+      'Optimized CI/CD pipelines by introducing parallel builds and workflow improvements, reducing build time by 60% while maintaining 95%+ automated test coverage.',
+      'Contributed to shared Angular and TypeScript inner-source libraries, improving code quality, maintainability, and reuse across multiple teams',
+      'Designed and implemented an internal API marketplace using React and TypeScript, improving developer discovery and increasing platform engagement by 25%'
     ],
     skills: ['JavaScript', 'TypeScript', 'React', 'Angular', 'Node.js', 'AWS', 'Azure'],
   },
@@ -53,9 +66,9 @@ const jobs: Job[] = [
     role: 'Software Engineer',
     period: 'Oct 2019 – Dec 2024',
     description: [
-      'Completed intensive training in full-stack software development and agile methodologies.',
-      'Worked on internal projects and client placements, developing robust web applications.',
-      'Gained strong foundation in software engineering principles, testing, and CI/CD pipelines.',
+      'Built a large-scale ETL pipeline using Python and AWS, processing over 7GB of JSON data from the AWS data lake, converting to ORC format, and deploying via AWS Batch and EC2 to support personalized user recommendations.',
+      'Led a team of 3 developers across multiple projects, assigned tasks, conducted code reviews, and ensured high engineering standards.',
+      'Trained 50+ engineers annually in JavaScript, React, Angular, and TypeScript, during company training programs improving frontend proficiency by 40% based on internal assessments.',
       'Organized and facilitated React.js masterclasses for frontend engineers within the firm',
       'Mentored junior engineers, providing guidance on technical challenges and best practices',
     ],
@@ -92,7 +105,7 @@ export const WorkExperience = () => {
             className="relative pl-8 md:pl-12"
           >
             {/* Timeline Dot */}
-            <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary border-4 border-background" />
+            <div className="absolute -left-2.25 top-0 h-4 w-4 rounded-full bg-primary border-4 border-background" />
 
             <Card className="p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-none bg-card/50 backdrop-blur-sm">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
