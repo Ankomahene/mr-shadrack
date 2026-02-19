@@ -15,10 +15,10 @@ export const handler: Handler = async (event) => {
     const { name, email, message } = JSON.parse(event.body || '');
 
     const data = await resend.emails.send({
-      from: 'Portfolio Contact <contact@mrshadrack.com>',
-      to: ['mister.shadrack@gmail.com', 'ankomaheneshadrack@gmail.com'],
+      from: 'Portfolio Contact <contact@mrshadrack.site>',
+      to: ['mister.shadrack@gmail.com', 'ankomaheneshadrack@gmail.com', 'mrshad.abuo@gmail.com'],
       replyTo: email,
-      subject: `New Contact from ${name} on mrshadrack.com`,
+      subject: `New Contact from ${name} on mrshadrack.site`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
