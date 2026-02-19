@@ -13,6 +13,7 @@ interface ProfileStatus {
     status_text: string;
     project_link: string;
     is_available: boolean;
+    is_visible?: boolean;
 }
 
 export const AdminStatus = () => {
@@ -20,7 +21,8 @@ export const AdminStatus = () => {
     const [formData, setFormData] = useState({
         status_text: '',
         project_link: '',
-        is_available: true
+        is_available: true,
+        is_visible: true
     });
 
     const { data: status, isLoading } = useQuery({
@@ -31,11 +33,16 @@ export const AdminStatus = () => {
                 .select('*')
                 .limit(1)
                 .single();
-            
+
             if (data) return data as ProfileStatus;
 
             // Initialize if empty
-            const initial = { status_text: 'Available for new opportunities', project_link: '', is_available: true };
+            const initial = {
+                status_text: 'Available for new opportunities',
+                project_link: '',
+                is_available: true,
+                is_visible: true
+            };
             const { data: newData } = await supabase.from('profile_status').insert([initial]).select().single();
             return newData as ProfileStatus;
         }
@@ -47,7 +54,8 @@ export const AdminStatus = () => {
             setFormData({
                 status_text: status.status_text,
                 project_link: status.project_link || '',
-                is_available: status.is_available
+                is_available: status.is_available,
+                is_visible: status.is_visible ?? true
             });
         }
     }, [status]);
@@ -65,6 +73,10 @@ export const AdminStatus = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['status'] });
             alert('Status updated successfully');
+        },
+        onError: (error: any) => {
+            console.error('Error updating status:', error);
+            alert(`Failed to update status: ${error.message || error}`);
         }
     });
 
@@ -74,6 +86,7 @@ export const AdminStatus = () => {
             status_text: formData.status_text,
             project_link: formData.project_link,
             is_available: formData.is_available,
+            is_visible: formData.is_visible
         });
     };
 
@@ -101,6 +114,19 @@ export const AdminStatus = () => {
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSave} className="space-y-6">
+                        <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                                <Label className="text-base">Show Status</Label>
+                                <p className="text-sm text-muted-foreground">
+                                    Show the status section on your profile hero.
+                                </p>
+                            </div>
+                            <Switch
+                                checked={formData.is_visible}
+                                onCheckedChange={(checked) => setFormData({ ...formData, is_visible: checked })}
+                            />
+                        </div>
+
                         <div className="flex items-center justify-between rounded-lg border p-4">
                             <div className="space-y-0.5">
                                 <Label className="text-base">Available for Work</Label>

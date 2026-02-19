@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Calendar, FolderGit2, MessageSquare, LogOut, Briefcase, Menu } from 'lucide-react';
+import { LayoutDashboard, Calendar, FolderGit2, MessageSquare, LogOut, Briefcase, Menu, Activity } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
@@ -21,8 +21,9 @@ export const AdminLayout = () => {
     { label: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
     { label: 'Year in Review', path: '/admin/year-in-review', icon: <Calendar size={20} /> },
     { label: 'Projects', path: '/admin/projects', icon: <FolderGit2 size={20} /> },
+    { label: 'Work Experience', path: '/admin/work-experience', icon: <Briefcase size={20} /> },
     { label: 'Messages', path: '/admin/messages', icon: <MessageSquare size={20} /> },
-    { label: 'Status', path: '/admin/status', icon: <Briefcase size={20} /> },
+    { label: 'Status', path: '/admin/status', icon: <Activity size={20} /> },
   ];
 
   const SidebarContent = () => (

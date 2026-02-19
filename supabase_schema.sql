@@ -1,65 +1,49 @@
--- Enable UUID extension
-create extension if not exists "uuid-ossp";
+-- Enable UUID extension if not already enabled
+create extension if not exists "pgcrypto";
 
--- Year in Review Table
-create table public.year_in_review (
-  id uuid default uuid_generate_v4() primary key,
-  title text not null,
-  description text,
-  date date not null default current_date,
-  category text check (category in ('Work', 'Life', 'Learning', 'Achievement', 'Other')),
-  media_url text,
-  tags text[],
-  created_at timestamptz default now()
+-- 1. Create the work_experiences table
+create table if not exists public.work_experiences (
+  id uuid default gen_random_uuid() primary key,
+  company text not null,
+  role text not null,
+  period text not null,
+  description text[] default '{}',
+  skills text[] default '{}',
+  display_order integer default 0,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- Profile Status Table (Single row expected usually, or latest)
-create table public.profile_status (
-  id uuid default uuid_generate_v4() primary key,
-  status_text text not null,
-  project_link text,
-  is_available boolean default true,
-  updated_at timestamptz default now()
-);
+-- 2. Enable Row Level Security (RLS)
+alter table public.work_experiences enable row level security;
 
--- Projects Table
-create table public.projects (
-  id uuid default uuid_generate_v4() primary key,
-  name text not null,
-  description text,
-  link text,
-  image_url text,
-  tags text[],
-  created_at timestamptz default now()
-);
+-- 3. Add RLS Policies for work_experiences
 
--- Messages Table (for Contact Form)
-create table public.messages (
-  id uuid default uuid_generate_v4() primary key,
-  name text not null,
-  email text not null,
-  message text not null,
-  is_read boolean default false,
-  created_at timestamptz default now()
-);
+-- Allow public read access
+create policy "Enable read access for all users"
+on public.work_experiences for select
+using (true);
 
--- Enable Row Level Security (RLS)
-alter table public.year_in_review enable row level security;
-alter table public.profile_status enable row level security;
-alter table public.projects enable row level security;
-alter table public.messages enable row level security;
+-- Allow authenticated users (admin) to insert
+create policy "Enable insert for authenticated users only"
+on public.work_experiences for insert
+with check (auth.role() = 'authenticated');
 
--- Create Policies
--- Allow read access to everyone for public content
-create policy "Allow public read access for year_in_review" on public.year_in_review for select using (true);
-create policy "Allow public read access for profile_status" on public.profile_status for select using (true);
-create policy "Allow public read access for projects" on public.projects for select using (true);
+-- Allow authenticated users (admin) to update
+create policy "Enable update for authenticated users only"
+on public.work_experiences for update
+using (auth.role() = 'authenticated');
 
--- Allow authenticated users (admin) to do everything
-create policy "Allow admin all access for year_in_review" on public.year_in_review for all using (auth.role() = 'authenticated');
-create policy "Allow admin all access for profile_status" on public.profile_status for all using (auth.role() = 'authenticated');
-create policy "Allow admin all access for projects" on public.projects for all using (auth.role() = 'authenticated');
-create policy "Allow admin all access for messages" on public.messages for all using (auth.role() = 'authenticated');
+-- Allow authenticated users (admin) to delete
+create policy "Enable delete for authenticated users only"
+on public.work_experiences for delete
+using (auth.role() = 'authenticated');
 
--- Allow public to insert messages (Contact Form)
-create policy "Allow public to insert messages" on public.messages for insert with check (true);
+
+-- 4. Update profile_status table (for the "Hide Status" feature)
+-- This adds the is_visible column if it doesn't exist
+do $$
+begin
+  if not exists (select 1 from information_schema.columns where table_name = 'profile_status' and column_name = 'is_visible') then
+    alter table public.profile_status add column is_visible boolean default true;
+  end if;
+end $$;

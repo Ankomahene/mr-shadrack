@@ -11,7 +11,7 @@ export const Navigation = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center"
+          className="hidden md:flex items-center"
         >
           <RouterLink to="/" className="font-bold text-lg">
             <img
@@ -26,7 +26,7 @@ export const Navigation = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex items-center gap-4"
+          className="flex items-center gap-4 w-full md:w-fit justify-between"
         >
           {/* <RouterLink
             to="/ui-designs"

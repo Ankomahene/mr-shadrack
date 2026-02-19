@@ -9,6 +9,7 @@ interface ProfileStatus {
   status_text: string;
   project_link?: string;
   is_available: boolean;
+  is_visible?: boolean;
 }
 
 export const Hero = () => {
@@ -25,14 +26,16 @@ export const Hero = () => {
         return {
           status_text: data.status_text,
           project_link: data.project_link,
-          is_available: data.is_available
+          is_available: data.is_available,
+          is_visible: data.is_visible ?? true
         } as ProfileStatus;
       }
 
       // Default fallback
       return {
         status_text: 'Available for new opportunities',
-        is_available: true
+        is_available: true,
+        is_visible: true
       } as ProfileStatus;
     },
     // Don't refetch too often for the hero
@@ -40,16 +43,16 @@ export const Hero = () => {
   });
 
   return (
-    <div className="relative isolate" id="hero">
+    <div className="relative isolate p-8" id="hero">
       <HeroBackground />
-      <div className="flex flex-col lg:flex-row my-16 lg:my-32 gap-12 items-center">
+      <div className="flex flex-col lg:flex-row gap-12 items-center">
         <motion.div
           className="w-full lg:w-2/3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {!loading && status && (
+          {!loading && status && status.is_visible && (
             <div className={`mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${status.is_available
               ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
               : 'bg-secondary text-secondary-foreground'

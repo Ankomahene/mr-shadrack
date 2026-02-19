@@ -10,6 +10,7 @@ import { YearInReview } from './pages/admin/YearInReview';
 import { AdminProjects } from './pages/admin/Projects';
 import { AdminMessages } from './pages/admin/Messages';
 import { AdminStatus } from './pages/admin/Status';
+import { AdminWorkExperience } from './pages/admin/WorkExperience';
 import { PublicYearInReview } from './pages/PublicYearInReview';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navigate } from 'react-router-dom';
@@ -19,7 +20,7 @@ const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { session, loading } = useAuth();
-  
+
   if (loading) return <div>Loading...</div>;
   if (!session) return <Navigate to="/admin/login" replace />;
 
@@ -37,7 +38,7 @@ const AppContent = () => {
         <Route path="/" element={<Home />} />
         <Route path="/ui-designs" element={<Works />} />
         <Route path="/year-in-review" element={<PublicYearInReview />} />
-        
+
         {/* Admin Routes */}
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin" element={
@@ -48,6 +49,7 @@ const AppContent = () => {
           <Route index element={<Dashboard />} />
           <Route path="year-in-review" element={<YearInReview />} />
           <Route path="projects" element={<AdminProjects />} />
+          <Route path="work-experience" element={<AdminWorkExperience />} />
           <Route path="messages" element={<AdminMessages />} />
           <Route path="status" element={<AdminStatus />} />
         </Route>
