@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase.ts';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
-import { Textarea } from '../../components/ui/textarea'; // Assuming Textarea component exists, if not I'll use native textarea or Input
+import { Textarea } from '../../components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../../components/ui/card';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../../components/ui/sheet';
 import { Plus, Trash2, Edit, MoveUp, MoveDown, Loader2, Upload, AlertCircle, Briefcase, Calendar } from 'lucide-react';
@@ -17,6 +17,9 @@ interface Job {
   company: string;
   role: string;
   period: string;
+  location: string | null;
+  company_url: string | null;
+  summary: string | null;
   description: string[];
   skills: string[];
   display_order: number;
@@ -39,7 +42,7 @@ export const AdminWorkExperience = () => {
 
   // Bulk Import State
   const [bulkInput, setBulkInput] = useState('');
-  const [parsedJobs, setParsedJobs] = useState<Omit<Job, 'id'>[]>([]);
+  const [parsedJobs, setParsedJobs] = useState<Omit<Job, 'id' | 'location' | 'company_url' | 'summary'>[]>([]);
   const [bulkError, setBulkError] = useState<string | null>(null);
 
   // Form State
@@ -47,6 +50,9 @@ export const AdminWorkExperience = () => {
     company: '',
     role: '',
     period: '',
+    location: '',
+    company_url: '',
+    summary: '',
     description: '', // We'll handle this as newline separated string in form
     skills: '', // Comma separated
     display_order: 0
@@ -65,7 +71,7 @@ export const AdminWorkExperience = () => {
   });
 
   const saveMutation = useMutation({
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: Record<string, unknown>) => {
       if (editingJob) {
         const { error } = await supabase.from('work_experiences').update(data).eq('id', editingJob.id);
         if (error) throw error;
@@ -82,7 +88,7 @@ export const AdminWorkExperience = () => {
   });
 
   const bulkInsertMutation = useMutation({
-    mutationFn: async (jobs: Omit<Job, 'id'>[]) => {
+    mutationFn: async (jobs: typeof parsedJobs) => {
       const { error } = await supabase.from('work_experiences').insert(jobs);
       if (error) throw error;
     },
@@ -125,6 +131,9 @@ export const AdminWorkExperience = () => {
       company: '',
       role: '',
       period: '',
+      location: '',
+      company_url: '',
+      summary: '',
       description: '',
       skills: '',
       display_order: 0
@@ -140,6 +149,9 @@ export const AdminWorkExperience = () => {
       company: formData.company,
       role: formData.role,
       period: formData.period,
+      location: formData.location.trim() || null,
+      company_url: formData.company_url.trim() || null,
+      summary: formData.summary.trim() || null,
       description: descriptionArray,
       skills: skillsArray,
       display_order: parseInt(formData.display_order.toString()) || 0
@@ -152,6 +164,9 @@ export const AdminWorkExperience = () => {
       company: job.company,
       role: job.role,
       period: job.period,
+      location: job.location ?? '',
+      company_url: job.company_url ?? '',
+      summary: job.summary ?? '',
       description: job.description ? job.description.join('\n') : '',
       skills: job.skills ? job.skills.join(', ') : '',
       display_order: job.display_order || 0
@@ -188,7 +203,7 @@ export const AdminWorkExperience = () => {
         throw new Error('Input must be an array of objects.');
       }
 
-      const mappedJobs: Omit<Job, 'id'>[] = rawData.map((item: RawJob, index) => {
+      const mappedJobs: typeof parsedJobs = rawData.map((item: RawJob, index) => {
         if (!item.company || !item.role) throw new Error(`Item at index ${index} is missing company or role.`);
 
         return {
@@ -203,8 +218,8 @@ export const AdminWorkExperience = () => {
 
       setParsedJobs(mappedJobs);
 
-    } catch (err: any) {
-      setBulkError(err.message || 'Failed to parse input. Please ensure it is a valid JavaScript array or JSON.');
+    } catch (err) {
+      setBulkError((err as Error).message || 'Failed to parse input. Please ensure it is a valid JavaScript array or JSON.');
     }
   };
 
@@ -219,7 +234,7 @@ export const AdminWorkExperience = () => {
           <Sheet open={isBulkImportOpen} onOpenChange={setIsBulkImportOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" className="flex-1 md:flex-none">
-                <Upload className="mr-2 h-4 w-4" /> Bulk Import
+                <Upload /> Bulk Import
               </Button>
             </SheetTrigger>
             <SheetContent className="overflow-y-auto sm:max-w-xl">
@@ -276,7 +291,7 @@ export const AdminWorkExperience = () => {
                       className="w-full"
                       disabled={bulkInsertMutation.isPending}
                     >
-                      {bulkInsertMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      {bulkInsertMutation.isPending && <Loader2 className="animate-spin" />}
                       Import {parsedJobs.length} Jobs
                     </Button>
                   </div>
@@ -291,7 +306,7 @@ export const AdminWorkExperience = () => {
           }}>
             <SheetTrigger asChild>
               <Button onClick={() => resetForm()} className="flex-1 md:flex-none">
-                <Plus className="mr-2 h-4 w-4" /> Add Job
+                <Plus /> Add Job
               </Button>
             </SheetTrigger>
             <SheetContent className="overflow-y-auto sm:max-w-lg">
@@ -328,6 +343,33 @@ export const AdminWorkExperience = () => {
                   />
                 </div>
                 <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+                  <Input
+                    id="location"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    placeholder="Accra · Remote"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="company_url">Company website</Label>
+                  <Input
+                    id="company_url"
+                    value={formData.company_url}
+                    onChange={(e) => setFormData({ ...formData, company_url: e.target.value })}
+                    placeholder="https://"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="summary">Summary</Label>
+                  <Input
+                    id="summary"
+                    value={formData.summary}
+                    onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                    placeholder="One line about the team or product"
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="description">Description (one bullet point per line)</Label>
                   <Textarea
                     id="description"
@@ -356,7 +398,7 @@ export const AdminWorkExperience = () => {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={saveMutation.isPending}>
-                  {saveMutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                  {saveMutation.isPending ? <Loader2 className="animate-spin" /> : null}
                   {editingJob ? 'Update Job' : 'Add Job'}
                 </Button>
               </form>
@@ -422,7 +464,7 @@ export const AdminWorkExperience = () => {
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={() => openEdit(job)}>
-                    <Edit className="h-4 w-4 mr-2" /> Edit
+                    <Edit /> Edit
                   </Button>
                   <Button
                     variant="destructive"
@@ -433,7 +475,7 @@ export const AdminWorkExperience = () => {
                       }
                     }}
                   >
-                    <Trash2 className="h-4 w-4 mr-2" /> Delete
+                    <Trash2 /> Delete
                   </Button>
                 </div>
               </CardFooter>
@@ -445,7 +487,7 @@ export const AdminWorkExperience = () => {
               <h3 className="text-lg font-medium">No work experience added</h3>
               <p className="text-muted-foreground mb-4">Add your first job manually or use bulk import.</p>
               <Button onClick={() => setIsSheetOpen(true)}>
-                <Plus className="mr-2 h-4 w-4" /> Add Job
+                <Plus /> Add Job
               </Button>
             </div>
           )}

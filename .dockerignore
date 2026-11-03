@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.env
+.env.*
+*.local
+scripts/.edge-profile
+scripts/og/.out
+supabase/.temp
+aboutme.md
+recent-work-exxperience.md
+Shadrack Ankomahene_CV.pdf

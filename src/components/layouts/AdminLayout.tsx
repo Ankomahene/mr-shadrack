@@ -1,10 +1,10 @@
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Calendar, FolderGit2, MessageSquare, LogOut, Briefcase, Menu, Activity } from 'lucide-react';
+import { LayoutDashboard, Calendar, FolderGit2, MessageSquare, LogOut, Briefcase, Menu, Activity, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { ThemeToggle } from '../theme-toggle';
+import { ThemeToggle } from '../site/primitives.tsx';
 
 export const AdminLayout = () => {
   const { signOut } = useAuth();
@@ -19,14 +19,14 @@ export const AdminLayout = () => {
 
   const navItems = [
     { label: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
-    { label: 'Year in Review', path: '/admin/year-in-review', icon: <Calendar size={20} /> },
+    { label: 'Journal', path: '/admin/journal', icon: <Calendar size={20} /> },
     { label: 'Projects', path: '/admin/projects', icon: <FolderGit2 size={20} /> },
     { label: 'Work Experience', path: '/admin/work-experience', icon: <Briefcase size={20} /> },
     { label: 'Messages', path: '/admin/messages', icon: <MessageSquare size={20} /> },
     { label: 'Status', path: '/admin/status', icon: <Activity size={20} /> },
   ];
 
-  const SidebarContent = () => (
+  const sidebarContent = (
     <div className="flex flex-col h-full">
       <div className="mb-8 flex items-center justify-between">
         <h2 className="text-2xl font-bold bg-linear-to-r from-primary to-primary/50 bg-clip-text text-transparent">
@@ -54,7 +54,16 @@ export const AdminLayout = () => {
         ))}
       </nav>
 
-      <div className="mt-auto pt-6 border-t border-border">
+      <div className="mt-auto pt-6 border-t border-border space-y-1">
+        <a
+          href="/"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+        >
+          <ExternalLink size={20} />
+          <span>View site</span>
+        </a>
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
@@ -71,7 +80,7 @@ export const AdminLayout = () => {
     <div className="flex h-screen bg-background text-foreground">
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 border-r border-border bg-card p-6 flex-col">
-        <SidebarContent />
+        {sidebarContent}
       </aside>
 
       {/* Mobile Header & Content */}
@@ -89,7 +98,7 @@ export const AdminLayout = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-6">
-                <SidebarContent />
+                {sidebarContent}
               </SheetContent>
             </Sheet>
           </div>

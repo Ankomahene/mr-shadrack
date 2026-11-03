@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase.ts';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
@@ -46,7 +46,7 @@ export const YearInReview = () => {
   });
 
   const saveMutation = useMutation({
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: Record<string, unknown>) => {
       if (editingLog) {
         const { error } = await supabase.from('year_in_review').update(data).eq('id', editingLog.id);
         if (error) throw error;
@@ -115,7 +115,7 @@ export const YearInReview = () => {
     <div className="space-y-6 pb-20 md:pb-0">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Year in Review</h1>
+          <h1 className="text-3xl font-bold">Journal</h1>
           <p className="text-muted-foreground">Manage your timeline entries.</p>
         </div>
         <Sheet open={isSheetOpen} onOpenChange={(open) => {
@@ -124,7 +124,7 @@ export const YearInReview = () => {
         }}>
           <SheetTrigger asChild>
             <Button onClick={() => resetForm()} className="w-full md:w-auto">
-              <Plus className="mr-2 h-4 w-4" /> Add Memory
+              <Plus /> Add Memory
             </Button>
           </SheetTrigger>
           <SheetContent className="overflow-y-auto">
@@ -192,7 +192,7 @@ export const YearInReview = () => {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={saveMutation.isPending}>
-                {saveMutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {saveMutation.isPending ? <Loader2 className="animate-spin" /> : null}
                 {editingLog ? 'Update Memory' : 'Add Memory'}
               </Button>
             </form>

@@ -1,448 +1,543 @@
-import React, { useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  ArrowDown,
+  ArrowUp,
+  Edit,
+  ExternalLink,
+  Eye,
+  EyeOff,
+  ImagePlus,
+  Loader2,
+  Plus,
+  Star,
+  Trash2,
+  Upload,
+} from 'lucide-react';
+import { type FormEvent, useState } from 'react';
+import type { GalleryImage, ProjectCategory } from '../../content/types.ts';
+import { Badge } from '../../components/ui/badge';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../../components/ui/card';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../../components/ui/sheet';
-import { Plus, Trash2, Edit, Link as LinkIcon, MoveUp, MoveDown, Loader2, Upload, AlertCircle } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import JSON5 from 'json5';
-import { Alert, AlertDescription, AlertTitle } from '../../components/ui/alert';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../../components/ui/sheet';
+import { Switch } from '../../components/ui/switch';
+import { Textarea } from '../../components/ui/textarea';
+import { supabase } from '../../lib/supabase.ts';
+import { cn } from '../../lib/utils.ts';
 
-interface Project {
+interface ProjectRow {
   id: string;
+  slug: string | null;
   name: string;
-  description: string;
-  link: string;
-  image_url: string;
+  tagline: string | null;
+  description: string | null;
+  overview: string | null;
+  category: ProjectCategory;
+  platforms: string[];
+  role: string | null;
+  year: string | null;
+  link: string | null;
+  repo_url: string | null;
+  image_url: string | null;
+  gallery: GalleryImage[];
+  highlights: string[];
   tags: string[];
+  accent: string | null;
+  featured: boolean;
+  is_visible: boolean;
   display_order: number;
 }
 
-// Interface for the raw project object from consts.tsx
-interface RawProject {
-  imageUrl?: string;
-  image_url?: string;
+interface Form {
   name: string;
+  slug: string;
+  tagline: string;
   description: string;
+  overview: string;
+  category: ProjectCategory;
+  platforms: string;
+  role: string;
+  year: string;
   link: string;
-  stacks?: string[];
-  tags?: string[];
+  repo_url: string;
+  image_url: string;
+  gallery: GalleryImage[];
+  highlights: string;
+  tags: string;
+  accent: string;
+  featured: boolean;
+  is_visible: boolean;
+}
+
+const empty: Form = {
+  name: '',
+  slug: '',
+  tagline: '',
+  description: '',
+  overview: '',
+  category: 'product',
+  platforms: 'Web',
+  role: '',
+  year: String(new Date().getFullYear()),
+  link: '',
+  repo_url: '',
+  image_url: '',
+  gallery: [],
+  highlights: '',
+  tags: '',
+  accent: '#d4a017',
+  featured: false,
+  is_visible: true,
+};
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+const list = (s: string, sep: string | RegExp = ',') =>
+  s
+    .split(sep)
+    .map((x) => x.trim())
+    .filter(Boolean);
+
+const categories: { id: ProjectCategory; label: string }[] = [
+  { id: 'product', label: 'Product' },
+  { id: 'client', label: 'Client' },
+  { id: 'side', label: 'Side project' },
+];
+const frames: GalleryImage['frame'][] = ['browser', 'desktop', 'phone', 'none'];
+
+const selectClass =
+  'h-10 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring';
+
+async function uploadImage(file: File, slug: string) {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'webp';
+  const path = `projects/${slug || 'misc'}/${Date.now()}-${Math.random().toString(36).slice(2, 7)}.${ext}`;
+  const { error } = await supabase.storage.from('portfolio').upload(path, file, {
+    cacheControl: '31536000',
+    contentType: file.type,
+  });
+  if (error) throw error;
+  return supabase.storage.from('portfolio').getPublicUrl(path).data.publicUrl;
 }
 
 export const AdminProjects = () => {
-  const queryClient = useQueryClient();
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isBulkImportOpen, setIsBulkImportOpen] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const qc = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<ProjectRow | null>(null);
+  const [form, setForm] = useState<Form>(empty);
+  const [newUrl, setNewUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Bulk Import State
-  const [bulkInput, setBulkInput] = useState('');
-  const [parsedProjects, setParsedProjects] = useState<Omit<Project, 'id'>[]>([]);
-  const [bulkError, setBulkError] = useState<string | null>(null);
-
-  // Form State
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    link: '',
-    image_url: '',
-    tags: '',
-    display_order: 0
-  });
-
-  const { data: projects = [], isLoading } = useQuery({
-    queryKey: ['projects'],
+  const { data: projects = [], isLoading, error: loadError } = useQuery({
+    queryKey: ['admin', 'projects'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .order('display_order', { ascending: true });
+      const { data, error } = await supabase.from('projects').select('*').order('display_order', { ascending: true });
       if (error) throw error;
-      return data as Project[];
-    }
-  });
-
-  const saveMutation = useMutation({
-    mutationFn: async (data: any) => {
-      if (editingProject) {
-        const { error } = await supabase.from('projects').update(data).eq('id', editingProject.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from('projects').insert([data]);
-        if (error) throw error;
-      }
+      return data as ProjectRow[];
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-      setIsSheetOpen(false);
-      resetForm();
-    }
   });
 
-  const bulkInsertMutation = useMutation({
-    mutationFn: async (projects: Omit<Project, 'id'>[]) => {
-      const { error } = await supabase.from('projects').insert(projects);
+  const invalidate = () => {
+    qc.invalidateQueries({ queryKey: ['admin', 'projects'] });
+    qc.invalidateQueries({ queryKey: ['public', 'projects'] });
+  };
+
+  const save = useMutation({
+    mutationFn: async (row: Partial<ProjectRow>) => {
+      const q = editing
+        ? supabase.from('projects').update(row).eq('id', editing.id)
+        : supabase.from('projects').insert([{ ...row, display_order: (projects.at(-1)?.display_order ?? 0) + 1 }]);
+      const { error } = await q;
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-      setIsBulkImportOpen(false);
-      setBulkInput('');
-      setParsedProjects([]);
-      setBulkError(null);
-      alert('Projects imported successfully!');
+      invalidate();
+      setOpen(false);
     },
-    onError: (error) => {
-      setBulkError(`Import failed: ${error.message}`);
-    }
+    onError: (e: Error) => setError(e.message),
   });
 
-  const deleteMutation = useMutation({
+  const patch = useMutation({
+    mutationFn: async ({ id, values }: { id: string; values: Partial<ProjectRow> }) => {
+      const { error } = await supabase.from('projects').update(values).eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: invalidate,
+  });
+
+  const remove = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from('projects').delete().eq('id', id);
       if (error) throw error;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-    }
+    onSuccess: invalidate,
   });
 
-  const reorderMutation = useMutation({
-    mutationFn: async ({ id, newOrder }: { id: string, newOrder: number }) => {
-      const { error } = await supabase.from('projects').update({ display_order: newOrder }).eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-    }
-  });
-
-  const resetForm = () => {
-    setEditingProject(null);
-    setFormData({
-      name: '',
-      description: '',
-      link: '',
-      image_url: '',
-      tags: '',
-      display_order: 0
-    });
+  const move = async (index: number, dir: -1 | 1) => {
+    const a = projects[index];
+    const b = projects[index + dir];
+    if (!a || !b) return;
+    // Orders can collide on older rows, so write explicit positions.
+    await Promise.all([
+      supabase.from('projects').update({ display_order: index + dir + 1 }).eq('id', a.id),
+      supabase.from('projects').update({ display_order: index + 1 }).eq('id', b.id),
+    ]);
+    invalidate();
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const openNew = () => {
+    setEditing(null);
+    setForm(empty);
+    setError(null);
+    setOpen(true);
+  };
+
+  const openEdit = (p: ProjectRow) => {
+    setEditing(p);
+    setError(null);
+    setForm({
+      name: p.name,
+      slug: p.slug ?? slugify(p.name),
+      tagline: p.tagline ?? '',
+      description: p.description ?? '',
+      overview: p.overview ?? '',
+      category: p.category ?? 'side',
+      platforms: (p.platforms ?? []).join(', '),
+      role: p.role ?? '',
+      year: p.year ?? '',
+      link: p.link ?? '',
+      repo_url: p.repo_url ?? '',
+      image_url: p.image_url ?? '',
+      gallery: p.gallery ?? [],
+      highlights: (p.highlights ?? []).join('\n'),
+      tags: (p.tags ?? []).join(', '),
+      accent: p.accent ?? '#d4a017',
+      featured: !!p.featured,
+      is_visible: p.is_visible ?? true,
+    });
+    setOpen(true);
+  };
+
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const tagsArray = formData.tags.split(',').map(tag => tag.trim()).filter(t => t);
-
-    saveMutation.mutate({
-      name: formData.name,
-      description: formData.description,
-      link: formData.link,
-      image_url: formData.image_url,
-      tags: tagsArray,
-      display_order: parseInt(formData.display_order.toString()) || 0
+    setError(null);
+    const slug = slugify(form.slug || form.name);
+    const gallery = form.gallery.filter((g) => g.src);
+    save.mutate({
+      name: form.name.trim(),
+      slug,
+      tagline: form.tagline.trim() || null,
+      description: form.description.trim(),
+      overview: form.overview.trim() || null,
+      category: form.category,
+      platforms: list(form.platforms),
+      role: form.role.trim() || null,
+      year: form.year.trim() || null,
+      link: form.link.trim(),
+      repo_url: form.repo_url.trim() || null,
+      image_url: form.image_url || gallery[0]?.src || null,
+      gallery,
+      highlights: list(form.highlights, /\n/),
+      tags: list(form.tags),
+      accent: form.accent,
+      featured: form.featured,
+      is_visible: form.is_visible,
     });
   };
 
-  const openEdit = (project: Project) => {
-    setEditingProject(project);
-    setFormData({
-      name: project.name,
-      description: project.description || '',
-      link: project.link || '',
-      image_url: project.image_url || '',
-      tags: project.tags ? project.tags.join(', ') : '',
-      display_order: project.display_order || 0
-    });
-    setIsSheetOpen(true);
-  };
+  const setGallery = (gallery: GalleryImage[]) => setForm((f) => ({ ...f, gallery }));
+  const addImage = (src: string) =>
+    setForm((f) => ({
+      ...f,
+      gallery: [...f.gallery, { src, alt: f.name || 'Screenshot', frame: 'browser' }],
+      image_url: f.image_url || src,
+    }));
 
-  const moveProject = (index: number, direction: 'up' | 'down') => {
-    if (direction === 'up' && index === 0) return;
-    if (direction === 'down' && index === projects.length - 1) return;
-
-    const currentProject = projects[index];
-    const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    const targetProject = projects[targetIndex];
-
-    // Swap display_order
-    reorderMutation.mutate({ id: currentProject.id, newOrder: targetProject.display_order });
-    reorderMutation.mutate({ id: targetProject.id, newOrder: currentProject.display_order });
-  };
-
-  const handleBulkParse = () => {
-    setBulkError(null);
-    setParsedProjects([]);
-
+  const onFiles = async (files: FileList | null) => {
+    if (!files?.length) return;
+    setUploading(true);
+    setError(null);
     try {
-      // Clean input: remove "export const projects: IProject[] =" part if present
-      let cleanInput = bulkInput.trim();
-      cleanInput = cleanInput.replace(/export\s+const\s+\w+(\s*:\s*\w+(\[\])?)?\s*=\s*/, '');
-      cleanInput = cleanInput.replace(/;$/, ''); // remove trailing semicolon
-
-      const rawData = JSON5.parse(cleanInput);
-
-      if (!Array.isArray(rawData)) {
-        throw new Error('Input must be an array of objects.');
-      }
-
-      const mappedProjects: Omit<Project, 'id'>[] = rawData.map((item: RawProject, index) => {
-        const name = item.name;
-        if (!name) throw new Error(`Item at index ${index} is missing a name.`);
-
-        return {
-          name: item.name,
-          description: item.description || '',
-          link: item.link || '',
-          image_url: item.imageUrl || item.image_url || '',
-          tags: item.stacks || item.tags || [],
-          display_order: (projects.length > 0 ? Math.max(...projects.map(p => p.display_order)) : 0) + index + 1
-        };
-      });
-
-      setParsedProjects(mappedProjects);
-
-    } catch (err: any) {
-      setBulkError(err.message || 'Failed to parse input. Please ensure it is a valid JavaScript array or JSON.');
+      for (const file of Array.from(files)) addImage(await uploadImage(file, slugify(form.slug || form.name)));
+    } catch (e) {
+      setError(`Upload failed: ${(e as Error).message}`);
+    } finally {
+      setUploading(false);
     }
   };
+
+  const set = <K extends keyof Form>(key: K) => (value: Form[K]) => setForm((f) => ({ ...f, [key]: value }));
 
   return (
     <div className="space-y-6 pb-20 md:pb-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold">Projects</h1>
-          <p className="text-muted-foreground">Manage your portfolio projects.</p>
+          <p className="text-muted-foreground">
+            {projects.filter((p) => p.is_visible !== false).length} live · {projects.filter((p) => p.featured).length} featured
+          </p>
         </div>
-        <div className="flex gap-2 w-full md:w-auto">
-          <Sheet open={isBulkImportOpen} onOpenChange={setIsBulkImportOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="flex-1 md:flex-none">
-                <Upload className="mr-2 h-4 w-4" /> Bulk Import
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="overflow-y-auto sm:max-w-xl">
-              <SheetHeader>
-                <SheetTitle>Bulk Import Projects</SheetTitle>
-              </SheetHeader>
-              <div className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label>Paste Project Array (JSON or JS Object)</Label>
-                  <p className="text-xs text-muted-foreground">
-                    Paste the content of your projects array from `consts.tsx`. It handles `imageUrl` to `image_url` and `stacks` to `tags` mapping automatically.
-                  </p>
-                  <textarea
-                    className="flex min-h-50 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    value={bulkInput}
-                    onChange={(e) => setBulkInput(e.target.value)}
-                    placeholder="[{ name: 'Project 1', ... }, ...]"
-                  />
-                </div>
-
-                <Button onClick={handleBulkParse} className="w-full">
-                  Parse & Preview
-                </Button>
-
-                {bulkError && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{bulkError}</AlertDescription>
-                  </Alert>
-                )}
-
-                {parsedProjects.length > 0 && (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">Preview ({parsedProjects.length} projects)</h3>
-                    </div>
-                    <div className="max-h-75 overflow-y-auto space-y-2 border rounded-md p-2">
-                      {parsedProjects.map((p, i) => (
-                        <div key={i} className="flex gap-2 p-2 border rounded bg-card/50">
-                          {p.image_url && <img src={p.image_url} alt="" className="w-10 h-10 object-cover rounded" />}
-                          <div className="overflow-hidden">
-                            <div className="font-medium truncate">{p.name}</div>
-                            <div className="text-xs text-muted-foreground truncate">{p.tags.join(', ')}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <Button
-                      onClick={() => bulkInsertMutation.mutate(parsedProjects)}
-                      className="w-full"
-                      disabled={bulkInsertMutation.isPending}
-                    >
-                      {bulkInsertMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Import {parsedProjects.length} Projects
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
-
-          <Sheet open={isSheetOpen} onOpenChange={(open) => {
-            setIsSheetOpen(open);
-            if (!open) resetForm();
-          }}>
-            <SheetTrigger asChild>
-              <Button onClick={() => resetForm()} className="flex-1 md:flex-none">
-                <Plus className="mr-2 h-4 w-4" /> Add Project
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="overflow-y-auto">
-              <SheetHeader>
-                <SheetTitle>{editingProject ? 'Edit Project' : 'Add New Project'}</SheetTitle>
-              </SheetHeader>
-              <form onSubmit={handleSave} className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Project Name</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Input
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="link">Project Link</Label>
-                  <Input
-                    id="link"
-                    value={formData.link}
-                    onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="image_url">Image URL</Label>
-                  <Input
-                    id="image_url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="tags">Tags (comma separated)</Label>
-                  <Input
-                    id="tags"
-                    value={formData.tags}
-                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                    placeholder="React, TypeScript, Tailwind"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="display_order">Display Order</Label>
-                  <Input
-                    id="display_order"
-                    type="number"
-                    value={formData.display_order}
-                    onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={saveMutation.isPending}>
-                  {saveMutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                  {editingProject ? 'Update Project' : 'Add Project'}
-                </Button>
-              </form>
-            </SheetContent>
-          </Sheet>
-        </div>
+        <Button onClick={openNew}>
+          <Plus /> New project
+        </Button>
       </div>
 
+      {loadError && <p className="text-sm text-destructive">{(loadError as Error).message}</p>}
+
       {isLoading ? (
-        <div className="flex justify-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <div className="flex justify-center py-12">
+          <Loader2 className="size-8 animate-spin text-muted-foreground" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <Card key={project.id} className="flex flex-col">
-              {project.image_url && (
-                <div className="h-48 w-full overflow-hidden rounded-t-lg">
-                  <img
-                    src={project.image_url}
-                    alt={project.name}
-                    className="h-full w-full object-cover transition-transform hover:scale-105"
-                  />
+        <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
+          {projects.map((p, i) => {
+            const visible = p.is_visible !== false;
+            return (
+              <div key={p.id} className={cn('flex items-center gap-4 bg-card p-3 sm:p-4', !visible && 'opacity-50')}>
+                <div className="flex flex-col">
+                  <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30" aria-label="Move up">
+                    <ArrowUp className="size-4" />
+                  </button>
+                  <button type="button" disabled={i === projects.length - 1} onClick={() => move(i, 1)} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30" aria-label="Move down">
+                    <ArrowDown className="size-4" />
+                  </button>
                 </div>
-              )}
-              <CardHeader>
-                <CardTitle className="flex justify-between items-start">
-                  <span className="truncate" title={project.name}>{project.name}</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="hidden h-14 w-24 shrink-0 overflow-hidden rounded-md border border-border bg-muted sm:block">
+                  {p.image_url && <img src={p.image_url.replace(/\.webp$/, '-sm.webp')} onError={(e) => ((e.target as HTMLImageElement).src = p.image_url!)} alt="" className="size-full object-cover object-top" />}
                 </div>
-              </CardContent>
-              <CardFooter className="flex justify-between border-t pt-4">
-                <div className="flex gap-1">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="size-2.5 rounded-full" style={{ background: p.accent ?? '#888' }} />
+                    <span className="font-medium">{p.name}</span>
+                    <Badge variant="outline" className="text-[10px] capitalize">
+                      {p.category ?? 'side'}
+                    </Badge>
+                    {!p.slug && (
+                      <Badge variant="secondary" className="text-[10px]">
+                        no slug
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="truncate text-sm text-muted-foreground">{p.tagline || p.description}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1">
                   <Button
                     variant="ghost"
-                    size="icon"
-                    onClick={() => moveProject(index, 'up')}
-                    disabled={index === 0 || reorderMutation.isPending}
-                    title="Move Up"
+                    size="icon-sm"
+                    title={p.featured ? 'Featured' : 'Feature it'}
+                    onClick={() => patch.mutate({ id: p.id, values: { featured: !p.featured } })}
                   >
-                    <MoveUp className="h-4 w-4" />
+                    <Star className={cn(p.featured && 'fill-amber-400 text-amber-400')} />
                   </Button>
                   <Button
                     variant="ghost"
-                    size="icon"
-                    onClick={() => moveProject(index, 'down')}
-                    disabled={index === projects.length - 1 || reorderMutation.isPending}
-                    title="Move Down"
+                    size="icon-sm"
+                    title={visible ? 'Visible' : 'Hidden'}
+                    onClick={() => patch.mutate({ id: p.id, values: { is_visible: !visible } })}
                   >
-                    <MoveDown className="h-4 w-4" />
+                    {visible ? <Eye /> : <EyeOff />}
                   </Button>
-                </div>
-                <div className="flex gap-2">
-                  {project.link && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="icon">
-                        <LinkIcon className="h-4 w-4" />
-                      </Button>
-                    </a>
+                  {p.slug && (
+                    <Button variant="ghost" size="icon-sm" asChild title="View on site">
+                      <a href={`/work/${p.slug}`} target="_blank" rel="noreferrer">
+                        <ExternalLink />
+                      </a>
+                    </Button>
                   )}
-                  <Button variant="outline" size="icon" onClick={() => openEdit(project)}>
-                    <Edit className="h-4 w-4" />
+                  <Button variant="ghost" size="icon-sm" title="Edit" onClick={() => openEdit(p)}>
+                    <Edit />
                   </Button>
                   <Button
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => {
-                      if (confirm('Delete this project?')) {
-                        deleteMutation.mutate(project.id);
-                      }
-                    }}
+                    variant="ghost"
+                    size="icon-sm"
+                    title="Delete"
+                    className="text-destructive"
+                    onClick={() => confirm(`Delete ${p.name}?`) && remove.mutate(p.id)}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 />
                   </Button>
                 </div>
-              </CardFooter>
-            </Card>
-          ))}
+              </div>
+            );
+          })}
+          {!projects.length && <p className="p-10 text-center text-muted-foreground">No projects</p>}
         </div>
       )}
+
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent className="w-full overflow-y-auto sm:max-w-2xl">
+          <SheetHeader>
+            <SheetTitle>{editing ? `Edit ${editing.name}` : 'New project'}</SheetTitle>
+          </SheetHeader>
+          <form onSubmit={onSubmit} className="mt-6 space-y-5 px-1 pb-10">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" required value={form.name} onChange={(e) => set('name')(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="slug">Slug</Label>
+                <Input id="slug" value={form.slug} placeholder={slugify(form.name)} onChange={(e) => set('slug')(e.target.value)} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tagline">Tagline</Label>
+              <Input id="tagline" value={form.tagline} onChange={(e) => set('tagline')(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Summary</Label>
+              <Textarea id="description" rows={3} required value={form.description} onChange={(e) => set('description')(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="overview">Case study</Label>
+              <Textarea id="overview" rows={6} value={form.overview} onChange={(e) => set('overview')(e.target.value)} placeholder="Paragraphs separated by a blank line" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="highlights">Highlights (one per line)</Label>
+              <Textarea id="highlights" rows={4} value={form.highlights} onChange={(e) => set('highlights')(e.target.value)} />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="space-y-2">
+                <Label htmlFor="category">Type</Label>
+                <select id="category" className={selectClass} value={form.category} onChange={(e) => set('category')(e.target.value as ProjectCategory)}>
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="year">Year</Label>
+                <Input id="year" value={form.year} onChange={(e) => set('year')(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="accent">Accent</Label>
+                <div className="flex gap-2">
+                  <input type="color" value={form.accent} onChange={(e) => set('accent')(e.target.value)} className="h-10 w-12 cursor-pointer rounded-md border border-input bg-background p-1" />
+                  <Input id="accent" value={form.accent} onChange={(e) => set('accent')(e.target.value)} />
+                </div>
+              </div>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="role">Role</Label>
+                <Input id="role" value={form.role} onChange={(e) => set('role')(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="platforms">Platforms</Label>
+                <Input id="platforms" value={form.platforms} onChange={(e) => set('platforms')(e.target.value)} placeholder="Web, Desktop, Android" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tags">Stack</Label>
+              <Input id="tags" value={form.tags} onChange={(e) => set('tags')(e.target.value)} placeholder="React, TypeScript, Supabase" />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="link">Live URL</Label>
+                <Input id="link" type="url" value={form.link} onChange={(e) => set('link')(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="repo">Repository</Label>
+                <Input id="repo" type="url" value={form.repo_url} onChange={(e) => set('repo_url')(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-6 rounded-lg border border-border p-4">
+              <label className="flex items-center gap-3 text-sm">
+                <Switch checked={form.featured} onCheckedChange={set('featured')} /> Featured
+              </label>
+              <label className="flex items-center gap-3 text-sm">
+                <Switch checked={form.is_visible} onCheckedChange={set('is_visible')} /> Visible
+              </label>
+            </div>
+
+            <div className="space-y-3">
+              <Label>Gallery</Label>
+              <div className="space-y-2">
+                {form.gallery.map((g, i) => (
+                  <div key={`${g.src}-${i}`} className={cn('flex gap-3 rounded-lg border p-2', form.image_url === g.src ? 'border-amber-400' : 'border-border')}>
+                    <img src={g.src} alt="" className="h-16 w-24 shrink-0 rounded object-cover object-top" />
+                    <div className="grid min-w-0 flex-1 gap-2 sm:grid-cols-[1fr_120px]">
+                      <Input
+                        value={g.alt}
+                        placeholder="Caption"
+                        onChange={(e) => setGallery(form.gallery.map((x, j) => (j === i ? { ...x, alt: e.target.value } : x)))}
+                      />
+                      <select
+                        className={selectClass}
+                        value={g.frame}
+                        onChange={(e) =>
+                          setGallery(form.gallery.map((x, j) => (j === i ? { ...x, frame: e.target.value as GalleryImage['frame'] } : x)))
+                        }
+                      >
+                        {frames.map((f) => (
+                          <option key={f} value={f}>
+                            {f}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <Button type="button" variant="ghost" size="icon-sm" title="Use as cover" onClick={() => set('image_url')(g.src)}>
+                        <Star className={cn(form.image_url === g.src && 'fill-amber-400 text-amber-400')} />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        title="Move up"
+                        disabled={i === 0}
+                        onClick={() => {
+                          const next = [...form.gallery];
+                          [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                          setGallery(next);
+                        }}
+                      >
+                        <ArrowUp />
+                      </Button>
+                      <Button type="button" variant="ghost" size="icon-sm" title="Remove" onClick={() => setGallery(form.gallery.filter((_, j) => j !== i))}>
+                        <Trash2 />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <Input value={newUrl} onChange={(e) => setNewUrl(e.target.value)} placeholder="Image URL or /work/slug/file.webp" />
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={!newUrl.trim()}
+                  onClick={() => {
+                    addImage(newUrl.trim());
+                    setNewUrl('');
+                  }}
+                >
+                  <ImagePlus /> Add
+                </Button>
+                <Button type="button" variant="outline" asChild disabled={uploading}>
+                  <label className="cursor-pointer">
+                    {uploading ? <Loader2 className="animate-spin" /> : <Upload />} Upload
+                    <input type="file" accept="image/webp,image/png,image/jpeg,image/avif" multiple className="hidden" onChange={(e) => onFiles(e.target.files)} />
+                  </label>
+                </Button>
+              </div>
+            </div>
+
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" className="w-full" disabled={save.isPending}>
+              {save.isPending && <Loader2 className="animate-spin" />}
+              {editing ? 'Save changes' : 'Create project'}
+            </Button>
+          </form>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
