@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase.ts';
 import { Button } from '../../components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription } from '../../components/ui/card';
 import { Mail, CheckCircle, Trash2, Clock, Loader2 } from 'lucide-react';

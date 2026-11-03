@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import React, { useState } from 'react';
+import { supabase } from '../../lib/supabase.ts';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
@@ -48,20 +48,20 @@ export const AdminStatus = () => {
         }
     });
 
-    // Sync form data when status is loaded
-    useEffect(() => {
-        if (status) {
-            setFormData({
-                status_text: status.status_text,
-                project_link: status.project_link || '',
-                is_available: status.is_available,
-                is_visible: status.is_visible ?? true
-            });
-        }
-    }, [status]);
+    // Sync form data when the saved status (re)loads.
+    const [synced, setSynced] = useState<ProfileStatus | undefined>(undefined);
+    if (status && status !== synced) {
+        setSynced(status);
+        setFormData({
+            status_text: status.status_text,
+            project_link: status.project_link || '',
+            is_available: status.is_available,
+            is_visible: status.is_visible ?? true
+        });
+    }
 
     const saveMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Partial<ProfileStatus>) => {
             if (status) {
                 const { error } = await supabase.from('profile_status').update({
                     ...data,
@@ -74,9 +74,9 @@ export const AdminStatus = () => {
             queryClient.invalidateQueries({ queryKey: ['status'] });
             alert('Status updated successfully');
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             console.error('Error updating status:', error);
-            alert(`Failed to update status: ${error.message || error}`);
+            alert(`Failed to update status: ${error.message}`);
         }
     });
 
@@ -161,7 +161,7 @@ export const AdminStatus = () => {
                         </div>
 
                         <Button type="submit" disabled={saveMutation.isPending}>
-                            {saveMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            {saveMutation.isPending && <Loader2 className="animate-spin" />}
                             Save Changes
                         </Button>
                     </form>

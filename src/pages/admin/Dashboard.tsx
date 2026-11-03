@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase.ts';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -35,9 +35,9 @@ export const Dashboard = () => {
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <Link to="/admin/year-in-review">
+        <Link to="/admin/journal">
           <Button>
-            <Plus className="mr-2 h-4 w-4" /> New Log Entry
+            <Plus /> New journal entry
           </Button>
         </Link>
       </div>
@@ -45,11 +45,11 @@ export const Dashboard = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Year in Review</CardTitle>
+            <CardTitle className="text-sm font-medium">Journal</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.reviews}</div>
-            <p className="text-xs text-muted-foreground">Total logged memories</p>
+            <p className="text-xs text-muted-foreground">Entries</p>
           </CardContent>
         </Card>
         <Card>
@@ -58,7 +58,7 @@ export const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.projects}</div>
-            <p className="text-xs text-muted-foreground">Active projects</p>
+            <p className="text-xs text-muted-foreground">In the database</p>
           </CardContent>
         </Card>
         <Card>

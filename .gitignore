@@ -26,3 +26,9 @@ dist-ssr
 recent-work-exxperience.md
 Shadrack Ankomahene_CV.pdf
 aboutme.md
+# Local tooling output
+scripts/.edge-profile
+scripts/og/.out
+.env
+!.env.example
+supabase/.temp
